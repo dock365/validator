@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx tsc",
+    "build-watch": "npx tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/hafeez1042/validatorjs/issues"
   },
-  "homepage": "https://github.com/hafeez1042/validatorjs#readme"
+  "homepage": "https://github.com/hafeez1042/validatorjs#readme",
+  "devDependencies": {
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.1"
+  }
 }

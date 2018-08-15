@@ -16,15 +16,15 @@ export interface IValidationResponse {
   messages: string[];
 }
 
-const minLengthFailMessage = (title) => `${title} is too short!`;
-const maxLengthFailMessage = (title) => `${title} is too long!`;
-const requiredFailMessage = (title) => `${title} is required!`;
-const typeFailMessage = (title, type) => `${title} must be a ${type}!`;
+const minLengthFailMessage = (title: string): string => `${title} is too short!`;
+const maxLengthFailMessage = (title: string): string => `${title} is too long!`;
+const requiredFailMessage = (title: string): string => `${title} is required!`;
+const typeFailMessage = (title: string, type: string): string => `${title} must be a ${type}!`;
 
 export const validate = (
   title: string,
   value: any,
-  options: IValidationOptions
+  options: IValidationOptions,
 ): IValidationResponse => {
 
   switch (options.type) {
@@ -36,18 +36,20 @@ export const validate = (
 
     default:
       return {
-        success: false,
         messages: ["Invalid type!"],
+        success: false,
       };
   }
-
 };
 
-
-export const validateString = (title: string, value: validationTypes, options: IValidationOptions): IValidationResponse => {
-  const response = {
-    success: true,
+export const validateString = (
+  title: string,
+  value: any,
+  options: IValidationOptions,
+): IValidationResponse => {
+  const response: IValidationResponse = {
     messages: [],
+    success: true,
   };
   if (typeof (value) !== "string") {
     response.success = false;
@@ -63,7 +65,7 @@ export const validateString = (title: string, value: validationTypes, options: I
     response.messages.push(maxLengthFailMessage(title));
   }
 
-  if (options.minLength && value.length < options.maxLength) {
+  if (options.minLength && value.length < options.minLength) {
     response.success = false;
     response.messages.push(minLengthFailMessage(title));
   }
@@ -71,10 +73,14 @@ export const validateString = (title: string, value: validationTypes, options: I
   return response;
 };
 
-export const validateNumber = (title: string, value: validationTypes, options: IValidationOptions & { type?: string }): IValidationResponse => {
-  const response = {
-    success: true,
+export const validateNumber = (
+  title: string,
+  value: any,
+  options: IValidationOptions & { type?: string },
+): IValidationResponse => {
+  const response: IValidationResponse = {
     messages: [],
+    success: true,
   };
 
   return response;
