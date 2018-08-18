@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc",
-    "build-watch": "npx tsc --watch",
-    "patch-release": "npm version patch && npm publish --access=public && git push --follow-tags"
+    "clean": "rm -rf dist/*",
+    "build": "clean && tsc",
+    "build-watch": "tsc --watch",
+    "patch-release": "npm version patch && npm publish --access=public && git push --follow-tags",
+    "minor-release": "npm version minor && npm publish --access=public && git push --follow-tags",
+    "major-release": "npm version major && npm publish --access=public && git push --follow-tags",
+    "test": "mocha -r ts-node/register --watch-extensions ts,tsx 'test/**/*.spec.ts' --watch"
   },
   "repository": {
     "type": "git",
@@ -23,6 +27,11 @@
   },
   "homepage": "https://github.com/hafeez1042/validatorjs#readme",
   "devDependencies": {
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "typescript": "^3.0.1"
   }
