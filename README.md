@@ -41,7 +41,7 @@ Initialize new validator instance with optional configurations
 #### Initilization configurations
 | Name                                               | Type     | Default  | Description                                                                                                                                                                              |
 | :------------------------------------------------- | :------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|validationMessages|Object|{}|Here define custome valiadtion messages and all other configurations
+|validationMessages|Object|ValidationMessages|Here define custome valiadtion messages and all other configurations
 
 ##### validationMessages
 | Name                                               | Type     | Default  | Description                                                                                                                                                                              |
