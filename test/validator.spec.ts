@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import {
+  includeFailMessage,
   maxLengthFailMessage,
   maxValueFailMessage,
   minLengthFailMessage,
@@ -91,6 +92,28 @@ describe("String Validator", () => {
           maxLengthFailMessage,
           { field: "Title", type: validationTypes.String, maxLength: "3" },
         ));
+    });
+  });
+
+  describe("Include", () => {
+    it("should return success: true without message when the value contain a perticular string", () => {
+      const result = validator.string("Title", "Neque porro quisquam est qui", { include: "porro" });
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an("array").that.is.empty;
+    });
+    it("should return success: false with message when the value doesn't contain a perticular string", () => {
+      const result = validator.string("Title", "Neque porro quisquam est qui", { include: "lorem" });
+      const expectedValidationMessage = validationMessage(
+        includeFailMessage,
+        { field: "Title", type: validationTypes.String, include: "lorem" }
+      );
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(expectedValidationMessage);
     });
   });
 });

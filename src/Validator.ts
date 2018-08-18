@@ -1,4 +1,5 @@
 import {
+  includeFailMessage,
   maxLengthFailMessage,
   minLengthFailMessage,
   requiredFailMessage,
@@ -23,6 +24,7 @@ export interface IBaseValidationOptions {
 export interface IStringValidationOptions extends IBaseValidationOptions {
   minLength?: number;
   maxLength?: number;
+  include?: string;
 }
 
 export interface INumberValidationOptions extends IBaseValidationOptions {
@@ -36,7 +38,7 @@ export interface IValidationResponse {
 }
 
 export default class Validator {
-  // constructor(validationMessages?: IValidationMessages) {
+  // constructor({validationMessages?: IValidationMessages}) {
   //   super(validationMessages);
   // }
 
@@ -81,6 +83,14 @@ export default class Validator {
       response.messages.push(validationMessage(
         minLengthFailMessage,
         { field, type: validationTypes.String, minLength: `${options.minLength}` },
+      ));
+    }
+
+    if (options.include && `${value}`.indexOf(options.include) < 0) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        includeFailMessage,
+        { field, type: validationTypes.String, include: options.include },
       ));
     }
     return response;

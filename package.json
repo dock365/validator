@@ -1,20 +1,20 @@
 {
-  "name": "@hafeez1042/validatorjs",
+  "name": "@braces/validator",
   "version": "0.0.6",
   "description": "",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist/*",
-    "build": "clean && tsc",
+    "build": "npm run clean && tsc",
     "build-watch": "tsc --watch",
     "patch-release": "npm version patch && npm publish --access=public && git push --follow-tags",
     "minor-release": "npm version minor && npm publish --access=public && git push --follow-tags",
     "major-release": "npm version major && npm publish --access=public && git push --follow-tags",
-    "test": "mocha -r ts-node/register --watch-extensions ts,tsx 'test/**/*.spec.ts' --watch"
+    "test": "mocha -r ts-node/register --watch-extensions ts,tsx --watch 'test/**/*.spec.ts' 'src/**/*.ts'"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hafeez1042/validatorjs.git"
+    "url": "git+https://github.com/codebraces/validator.git"
   },
   "keywords": [
     "validator",
@@ -23,9 +23,9 @@
   "author": "Hafeez Hamza",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hafeez1042/validatorjs/issues"
+    "url": "https://github.com/codebraces/validator/issues"
   },
-  "homepage": "https://github.com/hafeez1042/validatorjs#readme",
+  "homepage": "https://github.com/codebraces/validator#readme",
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.5",
