@@ -71,4 +71,4 @@ Initialize new validator instance with optional configurations
 
 ## License
 
-React Typescript Component Generator is MIT licensed.
+Validator is MIT licensed.
