@@ -40,6 +40,32 @@ class Validator {
         }
         return response;
     }
+    number(field, value, options) {
+        const response = {
+            messages: [],
+            success: true,
+        };
+        if (typeof (value) !== "number") {
+            response.success = false;
+            response.messages.push(validationMessage_1.default(validationMessages_1.typeFailMessage, { field, type: validationTypes_1.default.Number, value }));
+        }
+        if (!options) {
+            return response;
+        }
+        if (options.required !== undefined && options.required && !value) {
+            response.success = false;
+            response.messages.push(validationMessage_1.default(validationMessages_1.requiredFailMessage, { field, type: validationTypes_1.default.String, value }));
+        }
+        if (options.maxValue && value > options.maxValue) {
+            response.success = false;
+            response.messages.push(validationMessage_1.default(validationMessages_1.maxValueFailMessage, { field, type: validationTypes_1.default.String, maxValue: `${options.maxValue}` }));
+        }
+        if (options.minValue && value < options.minValue) {
+            response.success = false;
+            response.messages.push(validationMessage_1.default(validationMessages_1.minValueFailMessage, { field, type: validationTypes_1.default.String, minValue: `${options.minValue}` }));
+        }
+        return response;
+    }
 }
 exports.default = Validator;
 //# sourceMappingURL=Validator.js.map

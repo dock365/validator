@@ -24,4 +24,5 @@ export interface IValidationResponse {
 }
 export default class Validator {
     string(field: string, value: any, options?: IStringValidationOptions): IValidationResponse;
+    number(field: string, value: any, options?: INumberValidationOptions): IValidationResponse;
 }

@@ -107,13 +107,133 @@ describe("String Validator", () => {
       const result = validator.string("Title", "Neque porro quisquam est qui", { include: "lorem" });
       const expectedValidationMessage = validationMessage(
         includeFailMessage,
-        { field: "Title", type: validationTypes.String, include: "lorem" }
+        { field: "Title", type: validationTypes.String, include: "lorem" },
       );
 
       expect(result.success).to.equal(false);
       expect(result.messages)
         .to.be.an("array")
         .that.include(expectedValidationMessage);
+    });
+  });
+});
+
+describe("Number Validator", () => {
+  const validator = new Validator();
+
+  describe("Type", () => {
+    it("should return success: true without message when the value is integer", () => {
+      const result = validator.number("Title", 5454);
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an("array").that.is.empty;
+    });
+
+    it("should return success: true without message when the value is float", () => {
+      const result = validator.number("Title", 54.34);
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an("array").that.is.empty;
+    });
+
+    it("should return success: false with message when the value is not number", () => {
+      const result = validator.number("Title", "Not a number");
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(typeFailMessage, { field: "Title", type: validationTypes.Number }));
+    });
+  });
+
+  describe("Required", () => {
+    it("should return success: true without message when the value is present", () => {
+      const result = validator.number("Title", 3453, { required: true });
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages)
+        .to.be.an("array")
+        .that.is.empty;
+    });
+    it("should return success: false with message when the value is null", () => {
+      const result = validator.number("Title", null, { required: true });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(requiredFailMessage, { field: "Title", type: validationTypes.Number }));
+    });
+
+    it("should return success: false with message when the value is undefined", () => {
+      const result = validator.number("Title", undefined, { required: true });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(requiredFailMessage, { field: "Title", type: validationTypes.Number }));
+    });
+
+    it("should return success: false with message when the value is NaN", () => {
+      const result = validator.number("Title", NaN, { required: true });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(requiredFailMessage, { field: "Title", type: validationTypes.Number }));
+    });
+
+    it("should return success: false with message when the value is \"\"", () => {
+      const result = validator.number("Title", "", { required: true });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(requiredFailMessage, { field: "Title", type: validationTypes.Number }));
+    });
+  });
+
+  describe("Min Value", () => {
+    it("should return success: true without message when the value is greater than min value", () => {
+      const result = validator.number("Title", 45, { minValue: 40 });
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an("array").that.is.empty;
+    });
+    it("should return success: false with message when the value is less than min value", () => {
+      const result = validator.number("Title", 35, { minValue: 40 });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          minValueFailMessage,
+          { field: "Title", type: validationTypes.Number, minValue: "40" },
+        ));
+    });
+  });
+
+  describe("Max Value", () => {
+    it("should return success: true without message when the value is less than max value", () => {
+      const result = validator.number("Title", 25, { maxValue: 40 });
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an("array").that.is.empty;
+    });
+    it("should return success: false with message when the value is greater than max value", () => {
+      const result = validator.number("Title", 45, { maxValue: 40 });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          maxValueFailMessage,
+          { field: "Title", type: validationTypes.Number, maxValue: "40" },
+        ));
     });
   });
 });

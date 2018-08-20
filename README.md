@@ -25,16 +25,17 @@ Initialize new validator instance with optional configurations
   });
 
   validator.string("Title", "Some Value", { required: true /* other validation criteria*/ })
-  // {
-  //   success: true,
-  //   messages: [],
-  // }
 
-  validator.string("Title", "", { required: true /* other validation criteria*/ })
-  // {
-  //   success: true,
-  //   messages: ["Title is required!"],
-  // }
+  validator.number("Title", 54, { required: true /* other validation criteria*/ })
+  ```
+
+  Sample response
+
+  ```javascript
+  {
+    success: true,
+    messages: [ /*...validation messages if fail*/ ],
+  }
   ```
 
 ### Options
@@ -52,7 +53,7 @@ Initialize new validator instance with optional configurations
 |maxLength|string|$field can't be greater than $maxLength charectors!|validation fail message if field length is greater than specified value|
 |minValue|string|$field can't be less than $minValue!|validation fail message if field value is less than specified value|
 |maxValue|string|$field can't be greater than $maxValue!|validation fail message if field value is greater than specified value|
-|include|string|$field doesn't contain '$include'|validation fail message if value doesn't contain specified value|
+|include|string|\$field doesn't contain '$include'|validation fail message if value doesn't contain specified value|
 
 ### Validation criterias
 #### Base
@@ -66,6 +67,12 @@ Initialize new validator instance with optional configurations
 |minLength|number|undefined|return success as false if the field value length is less than specified value|
 |maxLength|number|undefined|return success as false if the field value length is greater than specified value|
 |include|string|undefined|return success as false if the field doesn't contain specified include string|
+
+#### Number
+| Name                                               | Type     | Default  | Description                                                                                                                                                                              |
+| :------------------------------------------------- | :------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|minValue|number|undefined|return success as false if the field value is less than specified value|
+|maxValue|number|undefined|return success as false if the field value is greater than specified value|
 
 
 
