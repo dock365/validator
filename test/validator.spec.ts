@@ -1,14 +1,5 @@
 import { expect } from "chai";
-import {
-  includeFailMessage,
-  maxLengthFailMessage,
-  maxValueFailMessage,
-  minLengthFailMessage,
-  minValueFailMessage,
-  requiredFailMessage,
-  typeFailMessage,
-  noTrailingSpaceFailMessage,
-} from "../src/const/validationMessages";
+import validationFailMessages from "../src/const/validationFailMessages";
 import validationTypes from "../src/const/validationTypes";
 import validationMessage from "../src/libs/ValidationMessage";
 import Validator from "../src/validator";
@@ -24,19 +15,35 @@ describe("String Validator", () => {
       // tslint:disable-next-line:no-unused-expression
       expect(result.messages).to.be.an("array").that.is.empty;
     });
+
     it("should return success: false with message when the value is not string", () => {
       const result = validator.string("Title", 65);
 
       expect(result.success).to.equal(false);
       expect(result.messages)
         .to.be.an("array")
-        .that.include(validationMessage(typeFailMessage, { field: "Title", type: validationTypes.String }));
+        .that.include(validationMessage(validationFailMessages.type, { field: "Title", type: validationTypes.String }));
+    });
+
+    it("should return success: false with custom message when the value is not string", () => {
+      const result = validator.string("Title", 65, {}, { type: "$title Custom type message" });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          "$title Custom type message",
+          { field: "Title", type: validationTypes.String },
+        ));
     });
   });
 
   describe("Required", () => {
     it("should return success: true without message when the value is present", () => {
-      const result = validator.string("Title", "Some Value", { required: true });
+      const result = validator.string(
+        "Title", "Some Value",
+        { required: true },
+      );
 
       expect(result.success).to.equal(true);
       // tslint:disable-next-line:no-unused-expression
@@ -44,13 +51,34 @@ describe("String Validator", () => {
         .to.be.an("array")
         .that.is.empty;
     });
+
     it("should return success: false with message when the value is not present", () => {
       const result = validator.string("Title", "", { required: true });
 
       expect(result.success).to.equal(false);
       expect(result.messages)
         .to.be.an("array")
-        .that.include(validationMessage(requiredFailMessage, { field: "Title", type: validationTypes.String }));
+        .that.include(validationMessage(
+          validationFailMessages.required,
+          { field: "Title", type: validationTypes.String },
+        ));
+    });
+
+    it("should return success: false with custom message when the value is not present", () => {
+      const result = validator.string(
+        "Title",
+        "",
+        { required: true },
+        { required: "$title Custom required message" },
+      );
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          "$title Custom required message",
+          { field: "Title", type: validationTypes.String },
+        ));
     });
   });
 
@@ -62,6 +90,7 @@ describe("String Validator", () => {
       // tslint:disable-next-line:no-unused-expression
       expect(result.messages).to.be.an("array").that.is.empty;
     });
+
     it("should return success: false with message when the value is less than min length", () => {
       const result = validator.string("Title", "ab", { minLength: 3 });
 
@@ -69,7 +98,24 @@ describe("String Validator", () => {
       expect(result.messages)
         .to.be.an("array")
         .that.include(validationMessage(
-          minLengthFailMessage,
+          validationFailMessages.minLength,
+          { field: "Title", type: validationTypes.String, minLength: "3" },
+        ));
+    });
+
+    it("should return success: false with custom message when the value is less than min length", () => {
+      const result = validator.string(
+        "Title",
+        "ab",
+        { minLength: 3 },
+        { minLength: "$title Custom minLength message" },
+      );
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          "$title Custom minLength message",
           { field: "Title", type: validationTypes.String, minLength: "3" },
         ));
     });
@@ -83,6 +129,7 @@ describe("String Validator", () => {
       // tslint:disable-next-line:no-unused-expression
       expect(result.messages).to.be.an("array").that.is.empty;
     });
+
     it("should return success: false with message when the value is greater than max length", () => {
       const result = validator.string("Title", "abcd", { maxLength: 3 });
 
@@ -90,7 +137,24 @@ describe("String Validator", () => {
       expect(result.messages)
         .to.be.an("array")
         .that.include(validationMessage(
-          maxLengthFailMessage,
+          validationFailMessages.maxLength,
+          { field: "Title", type: validationTypes.String, maxLength: "3" },
+        ));
+    });
+
+    it("should return success: false with custom message when the value is greater than max length", () => {
+      const result = validator.string(
+        "Title",
+        "abcd",
+        { maxLength: 3 },
+        { maxLength: "$title Custom maxLength message" },
+      );
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          "$title Custom maxLength message",
           { field: "Title", type: validationTypes.String, maxLength: "3" },
         ));
     });
@@ -104,10 +168,29 @@ describe("String Validator", () => {
       // tslint:disable-next-line:no-unused-expression
       expect(result.messages).to.be.an("array").that.is.empty;
     });
+
     it("should return success: false with message when the value doesn't contain a perticular string", () => {
       const result = validator.string("Title", "Neque porro quisquam est qui", { include: "lorem" });
       const expectedValidationMessage = validationMessage(
-        includeFailMessage,
+        validationFailMessages.include,
+        { field: "Title", type: validationTypes.String, include: "lorem" },
+      );
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(expectedValidationMessage);
+    });
+
+    it("should return success: false with custom message when the value doesn't contain a perticular string", () => {
+      const result = validator.string(
+        "Title",
+        "Neque porro quisquam est qui",
+        { include: "lorem" },
+        { include: "$title Custom include $include message" },
+      );
+      const expectedValidationMessage = validationMessage(
+        "$title Custom include $include message",
         { field: "Title", type: validationTypes.String, include: "lorem" },
       );
 
@@ -120,17 +203,132 @@ describe("String Validator", () => {
 
   describe("No Trailing Spaces", () => {
     it("should return success: true without message when the value does not conatin trailing spaces", () => {
-      const result = validator.string("Title", "Neque porro quisquam est qui", { noTrailingSpaces: true });
+      const result = validator.string("Title", "Neque porro quisquam est qui", { noTrailingSpace: true });
 
       expect(result.success).to.equal(true);
       // tslint:disable-next-line:no-unused-expression
       expect(result.messages).to.be.an("array").that.is.empty;
     });
+
     it("should return success: false with message when the value conatin trailing spaces", () => {
-      const result = validator.string("Title", " Neque porro quisquam est qui ", { noTrailingSpaces: true });
+      const result = validator.string("Title", " Neque porro quisquam est qui ", { noTrailingSpace: true });
       const expectedValidationMessage = validationMessage(
-        noTrailingSpaceFailMessage,
-        { field: "Title", type: validationTypes.String},
+        validationFailMessages.noTrailingSpace,
+        { field: "Title", type: validationTypes.String },
+      );
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(expectedValidationMessage);
+    });
+
+    it("should return success: false with custom message when the value conatin trailing spaces", () => {
+      const result = validator.string(
+        "Title",
+        " Neque porro quisquam est qui ",
+        { noTrailingSpace: true },
+        { noTrailingSpace: "$title Custom noTrailingSpace message" },
+      );
+      const expectedValidationMessage = validationMessage(
+        "$title Custom noTrailingSpace message",
+        { field: "Title", type: validationTypes.String },
+      );
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(expectedValidationMessage);
+    });
+  });
+});
+
+describe("String Validator With Initialized Custome Message", () => {
+  const failMessages = {
+    include: "Updated start $field must include '$include'! Updated end",
+    maxLength: "Updated start $field can't be greater than $maxLength ! Updated end",
+    maxValue: "Updated start $field can't be greater than $maxValue! Updated end",
+    minLength: "Updated start $field can't be less than $minLength charectors! Updated end",
+    minValue: "Updated start $field can't be less than $minValue! Updated end",
+    noTrailingSpace: "Updated start $field must not contain any trailing spaces! Updated end",
+    required: "Updated start $field is required! Updated end",
+    type: "Updated start $field must be a $type! Updated end",
+  };
+  const validator = new Validator({ failMessages });
+
+  describe("Type", () => {
+    it("should return success: false with message when the value is not string", () => {
+      const result = validator.string("Title", 65);
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(failMessages.type, { field: "Title", type: validationTypes.String }));
+    });
+  });
+
+  describe("Required", () => {
+    it("should return success: false with message when the value is not present", () => {
+      const result = validator.string("Title", "", { required: true });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          failMessages.required,
+          { field: "Title", type: validationTypes.String },
+        ));
+    });
+  });
+
+  describe("Min Length", () => {
+    it("should return success: false with message when the value is less than min length", () => {
+      const result = validator.string("Title", "ab", { minLength: 3 });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          failMessages.minLength,
+          { field: "Title", type: validationTypes.String, minLength: "3" },
+        ));
+    });
+  });
+
+  describe("Max Length", () => {
+    it("should return success: false with message when the value is greater than max length", () => {
+      const result = validator.string("Title", "abcd", { maxLength: 3 });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          failMessages.maxLength,
+          { field: "Title", type: validationTypes.String, maxLength: "3" },
+        ));
+    });
+  });
+
+  describe("Include", () => {
+    it("should return success: false with message when the value doesn't contain a perticular string", () => {
+      const result = validator.string("Title", "Neque porro quisquam est qui", { include: "lorem" });
+      const expectedValidationMessage = validationMessage(
+        failMessages.include,
+        { field: "Title", type: validationTypes.String, include: "lorem" },
+      );
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(expectedValidationMessage);
+    });
+  });
+
+  describe("No Trailing Spaces", () => {
+    it("should return success: false with message when the value conatin trailing spaces", () => {
+      const result = validator.string("Title", " Neque porro quisquam est qui ", { noTrailingSpace: true });
+      const expectedValidationMessage = validationMessage(
+        failMessages.noTrailingSpace,
+        { field: "Title", type: validationTypes.String },
       );
 
       expect(result.success).to.equal(false);
@@ -167,7 +365,7 @@ describe("Number Validator", () => {
       expect(result.success).to.equal(false);
       expect(result.messages)
         .to.be.an("array")
-        .that.include(validationMessage(typeFailMessage, { field: "Title", type: validationTypes.Number }));
+        .that.include(validationMessage(validationFailMessages.type, { field: "Title", type: validationTypes.Number }));
     });
   });
 
@@ -181,13 +379,17 @@ describe("Number Validator", () => {
         .to.be.an("array")
         .that.is.empty;
     });
+
     it("should return success: false with message when the value is null", () => {
       const result = validator.number("Title", null, { required: true });
 
       expect(result.success).to.equal(false);
       expect(result.messages)
         .to.be.an("array")
-        .that.include(validationMessage(requiredFailMessage, { field: "Title", type: validationTypes.Number }));
+        .that.include(validationMessage(
+          validationFailMessages.required,
+          { field: "Title", type: validationTypes.Number },
+        ));
     });
 
     it("should return success: false with message when the value is undefined", () => {
@@ -196,7 +398,10 @@ describe("Number Validator", () => {
       expect(result.success).to.equal(false);
       expect(result.messages)
         .to.be.an("array")
-        .that.include(validationMessage(requiredFailMessage, { field: "Title", type: validationTypes.Number }));
+        .that.include(validationMessage(
+          validationFailMessages.required,
+          { field: "Title", type: validationTypes.Number },
+        ));
     });
 
     it("should return success: false with message when the value is NaN", () => {
@@ -205,7 +410,10 @@ describe("Number Validator", () => {
       expect(result.success).to.equal(false);
       expect(result.messages)
         .to.be.an("array")
-        .that.include(validationMessage(requiredFailMessage, { field: "Title", type: validationTypes.Number }));
+        .that.include(validationMessage(
+          validationFailMessages.required,
+          { field: "Title", type: validationTypes.Number },
+        ));
     });
 
     it("should return success: false with message when the value is \"\"", () => {
@@ -214,7 +422,27 @@ describe("Number Validator", () => {
       expect(result.success).to.equal(false);
       expect(result.messages)
         .to.be.an("array")
-        .that.include(validationMessage(requiredFailMessage, { field: "Title", type: validationTypes.Number }));
+        .that.include(validationMessage(
+          validationFailMessages.required,
+          { field: "Title", type: validationTypes.Number },
+        ));
+    });
+
+    it("should return success: false with custom message when the value is undefined", () => {
+      const result = validator.number(
+        "Title",
+        undefined,
+        { required: true },
+        { required: "$title Custom required message" },
+      );
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          "$title Custom required message",
+          { field: "Title", type: validationTypes.Number },
+        ));
     });
   });
 
@@ -226,6 +454,7 @@ describe("Number Validator", () => {
       // tslint:disable-next-line:no-unused-expression
       expect(result.messages).to.be.an("array").that.is.empty;
     });
+
     it("should return success: false with message when the value is less than min value", () => {
       const result = validator.number("Title", 35, { minValue: 40 });
 
@@ -233,7 +462,24 @@ describe("Number Validator", () => {
       expect(result.messages)
         .to.be.an("array")
         .that.include(validationMessage(
-          minValueFailMessage,
+          validationFailMessages.minValue,
+          { field: "Title", type: validationTypes.Number, minValue: "40" },
+        ));
+    });
+
+    it("should return success: false with custom message when the value is less than min value", () => {
+      const result = validator.number(
+        "Title",
+        35,
+        { minValue: 40 },
+        { minValue: "$title Custom minValue message" },
+      );
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          "$title Custom minValue message",
           { field: "Title", type: validationTypes.Number, minValue: "40" },
         ));
     });
@@ -247,6 +493,7 @@ describe("Number Validator", () => {
       // tslint:disable-next-line:no-unused-expression
       expect(result.messages).to.be.an("array").that.is.empty;
     });
+
     it("should return success: false with message when the value is greater than max value", () => {
       const result = validator.number("Title", 45, { maxValue: 40 });
 
@@ -254,7 +501,90 @@ describe("Number Validator", () => {
       expect(result.messages)
         .to.be.an("array")
         .that.include(validationMessage(
-          maxValueFailMessage,
+          validationFailMessages.maxValue,
+          { field: "Title", type: validationTypes.Number, maxValue: "40" },
+        ));
+    });
+
+    it("should return success: false with custom message when the value is greater than max value", () => {
+      const result = validator.number(
+        "Title",
+        45,
+        { maxValue: 40 },
+        { maxValue: "$title Custom maxValue message" },
+      );
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          "$title Custom maxValue message",
+          { field: "Title", type: validationTypes.Number, maxValue: "40" },
+        ));
+    });
+  });
+});
+
+describe("Number Validator With Initialized Custome Message", () => {
+  const failMessages = {
+    include: "Number Validation Updated start $field must include '$include'! Updated end",
+    maxLength: "Number Validation Updated start $field can't be greater than $maxLength ! Updated end",
+    maxValue: "Number Validation Updated start $field can't be greater than $maxValue! Updated end",
+    minLength: "Number Validation Updated start $field can't be less than $minLength charectors! Updated end",
+    minValue: "Number Validation Updated start $field can't be less than $minValue! Updated end",
+    required: "Number Validation Updated start $field is required! Updated end",
+    type: "Number Validation Updated start $field must be a $type! Updated end",
+  };
+  const validator = new Validator({ failMessages });
+  describe("Type", () => {
+    it("should return success: false with message when the value is not number", () => {
+      const result = validator.number("Title", "Not a number");
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(failMessages.type, { field: "Title", type: validationTypes.Number }));
+    });
+  });
+
+  describe("Required", () => {
+
+    it("should return success: false with message when the value is undefined", () => {
+      const result = validator.number("Title", undefined, { required: true });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          failMessages.required,
+          { field: "Title", type: validationTypes.Number },
+        ));
+    });
+  });
+
+  describe("Min Value", () => {
+    it("should return success: false with message when the value is less than min value", () => {
+      const result = validator.number("Title", 35, { minValue: 40 });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          failMessages.minValue,
+          { field: "Title", type: validationTypes.Number, minValue: "40" },
+        ));
+    });
+  });
+
+  describe("Max Value", () => {
+    it("should return success: false with message when the value is greater than max value", () => {
+      const result = validator.number("Title", 45, { maxValue: 40 });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          failMessages.maxValue,
           { field: "Title", type: validationTypes.Number, maxValue: "40" },
         ));
     });

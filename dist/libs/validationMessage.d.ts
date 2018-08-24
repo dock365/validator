@@ -1,5 +1,5 @@
 import validationTypes from "../const/validationTypes";
-declare const _default: (message: string, values: {
+declare const _default: (message: string | undefined, values: {
     [key: string]: string | undefined;
     field?: string | undefined;
     value?: string | undefined;
