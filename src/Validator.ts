@@ -4,6 +4,7 @@ import {
   maxValueFailMessage,
   minLengthFailMessage,
   minValueFailMessage,
+  noTrailingSpaceFailMessage,
   requiredFailMessage,
   typeFailMessage,
 } from "./const/validationMessages";
@@ -27,6 +28,7 @@ export interface IStringValidationOptions extends IBaseValidationOptions {
   minLength?: number;
   maxLength?: number;
   include?: string;
+  noTrailingSpaces?: boolean;
 }
 
 export interface INumberValidationOptions extends IBaseValidationOptions {
@@ -95,6 +97,15 @@ export default class Validator {
         { field, type: validationTypes.String, include: options.include },
       ));
     }
+
+    if (options.noTrailingSpaces && `${value}`.trim().length !== `${value}`.length) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        noTrailingSpaceFailMessage,
+        { field, type: validationTypes.String },
+      ));
+    }
+
     return response;
   }
 

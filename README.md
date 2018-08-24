@@ -20,7 +20,7 @@ Initialize new validator instance with optional configurations
 
   const validator = new Validator({
     validationMessages: {
-      ...
+      ... // Custom validation message is under development
     }
   });
 
@@ -53,7 +53,8 @@ Initialize new validator instance with optional configurations
 |maxLength|string|$field can't be greater than $maxLength charectors!|validation fail message if field length is greater than specified value|
 |minValue|string|$field can't be less than $minValue!|validation fail message if field value is less than specified value|
 |maxValue|string|$field can't be greater than $maxValue!|validation fail message if field value is greater than specified value|
-|include|string|\$field doesn't contain '$include'|validation fail message if value doesn't contain specified value|
+|include|string|\$field doesn't contain '$include'!|validation fail message if value doesn't contain specified value|
+|noTrailingSpaces|string|\$field must not contain any trailing spaces!|validation fail message if value contain trailing space|
 
 ### Validation criterias
 #### Base
@@ -67,6 +68,7 @@ Initialize new validator instance with optional configurations
 |minLength|number|undefined|return success as false if the field value length is less than specified value|
 |maxLength|number|undefined|return success as false if the field value length is greater than specified value|
 |include|string|undefined|return success as false if the field doesn't contain specified include string|
+|noTrailingSpaces|boolean|undefined|return success as false if the field contains trailing space|
 
 #### Number
 | Name                                               | Type     | Default  | Description                                                                                                                                                                              |

@@ -7,6 +7,7 @@ import {
   minValueFailMessage,
   requiredFailMessage,
   typeFailMessage,
+  noTrailingSpaceFailMessage,
 } from "../src/const/validationMessages";
 import validationTypes from "../src/const/validationTypes";
 import validationMessage from "../src/libs/ValidationMessage";
@@ -108,6 +109,28 @@ describe("String Validator", () => {
       const expectedValidationMessage = validationMessage(
         includeFailMessage,
         { field: "Title", type: validationTypes.String, include: "lorem" },
+      );
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(expectedValidationMessage);
+    });
+  });
+
+  describe("No Trailing Spaces", () => {
+    it("should return success: true without message when the value does not conatin trailing spaces", () => {
+      const result = validator.string("Title", "Neque porro quisquam est qui", { noTrailingSpaces: true });
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an("array").that.is.empty;
+    });
+    it("should return success: false with message when the value conatin trailing spaces", () => {
+      const result = validator.string("Title", " Neque porro quisquam est qui ", { noTrailingSpaces: true });
+      const expectedValidationMessage = validationMessage(
+        noTrailingSpaceFailMessage,
+        { field: "Title", type: validationTypes.String},
       );
 
       expect(result.success).to.equal(false);

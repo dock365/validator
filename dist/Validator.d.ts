@@ -13,6 +13,7 @@ export interface IStringValidationOptions extends IBaseValidationOptions {
     minLength?: number;
     maxLength?: number;
     include?: string;
+    noTrailingSpaces?: boolean;
 }
 export interface INumberValidationOptions extends IBaseValidationOptions {
     minValue?: number;

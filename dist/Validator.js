@@ -38,6 +38,10 @@ class Validator {
             response.success = false;
             response.messages.push(validationMessage_1.default(validationMessages_1.includeFailMessage, { field, type: validationTypes_1.default.String, include: options.include }));
         }
+        if (options.noTrailingSpaces && `${value}`.trim().length !== `${value}`.length) {
+            response.success = false;
+            response.messages.push(validationMessage_1.default(validationMessages_1.noTrailingSpaceFailMessage, { field, type: validationTypes_1.default.String }));
+        }
         return response;
     }
     number(field, value, options) {

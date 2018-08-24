@@ -5,3 +5,4 @@ export declare const maxLengthFailMessage: string;
 export declare const minValueFailMessage: string;
 export declare const maxValueFailMessage: string;
 export declare const includeFailMessage: string;
+export declare const noTrailingSpaceFailMessage: string;
