@@ -57,7 +57,7 @@ validator.string(
 )
 
 // Number
-validator.string(
+validator.number(
   "Title", // Field Name
   25, // Value to be validated
   {
@@ -66,7 +66,7 @@ validator.string(
   },
 )
 ```
-Validate a string with custom fail message
+Validate a value with custom fail message
 ```javascript
 // String
 validator.string(
@@ -84,7 +84,7 @@ validator.string(
 )
 
 // Number
-validator.string(
+validator.number(
   "Title", // Field Name
   25, // Value to be validated
   {
