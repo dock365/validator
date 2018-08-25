@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import validationFailMessages from "../src/const/validationFailMessages";
 import validationTypes from "../src/const/validationTypes";
-import validationMessage from "../src/libs/ValidationMessage";
+import validationMessage from "../src/libs/validationMessage";
 import Validator from "../src/Validator";
 
 describe("String Validator", () => {
