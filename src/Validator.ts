@@ -74,6 +74,7 @@ export default class Validator {
     if (!options) {
       return response;
     }
+
     if (options.required !== undefined && options.required && !value) {
       response.success = false;
       response.messages.push(validationMessage(
@@ -138,6 +139,7 @@ export default class Validator {
     if (!options) {
       return response;
     }
+
     if (options.required !== undefined && options.required && !value) {
       response.success = false;
       response.messages.push(validationMessage(
