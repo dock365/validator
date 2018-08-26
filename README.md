@@ -1,4 +1,7 @@
 # Validator
+[![Build Status](https://travis-ci.org/codebraces/validator.svg?branch=master)](https://travis-ci.org/codebraces/validator)
+[![npm Version](https://img.shields.io/npm/v/@braces/validator.svg)](https://www.npmjs.com/package/@braces/validator)
+
 
 A general purpose validation library to validate strings or numbers.
 
