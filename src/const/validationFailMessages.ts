@@ -1,4 +1,4 @@
-import { IValidationFailMessages } from "../Validator";
+import { IValidationFailMessages } from "..";
 
 const validationFailMessages: IValidationFailMessages = {
   include: "$field must include '$include'!",
