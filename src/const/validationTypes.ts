@@ -3,6 +3,7 @@ enum validationTypes {
   Number = "Number",
   Email = "Email",
   Date = "Date",
+
 }
 
 export default validationTypes;
