@@ -167,6 +167,34 @@ export default class Validator {
     return response;
   }
 
+  public date(
+    field: string,
+    value: any,
+    options?: INumberValidationOptions,
+    failMessages?: IValidationFailMessages,
+  ): IValidationResponse {
+    const response: IValidationResponse = {
+      messages: [],
+      success: true,
+    };
+
+    return response;
+  }
+
+  public email(
+    field: string,
+    value: any,
+    options?: INumberValidationOptions,
+    failMessages?: IValidationFailMessages,
+  ): IValidationResponse {
+    const response: IValidationResponse = {
+      messages: [],
+      success: true,
+    };
+
+    return response;
+  }
+
   private _initializaValidationMessages(failMessages?: IValidationFailMessages) {
     if (failMessages) {
       this.includeFailMessage = failMessages.include || this.includeFailMessage;
