@@ -195,6 +195,14 @@ export default class Validator {
       return response;
     }
 
+    if (options.required !== undefined && options.required && !value) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.required || this.requiredFailMessage,
+        { field, type: validationTypes.Date, value },
+      ));
+    }
+
     return response;
   }
 
