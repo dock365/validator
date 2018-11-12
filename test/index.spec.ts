@@ -665,14 +665,14 @@ describe("Date Validator", () => {
     });
 
     it("should return success: false with message when the value is greater than end Date", () => {
-      const result = validator.date("Title", new Date("7/13/2018"), { endDate: new Date("12/15/2019") });
+      const result = validator.date("Title", new Date("7/13/2020"), { endDate: new Date("12/15/2019") });
 
       expect(result.success).to.equal(false);
       expect(result.messages)
         .to.be.an("array")
         .that.include(validationMessage(
-          validationFailMessages.maxLength,
-          { field: "Title", type: validationTypes.Date, maxLength: "3" },
+          validationFailMessages.endDate,
+          { field: "Title", type: validationTypes.Date, maxLength: "12/15/2019" },
         ));
     });
   });
