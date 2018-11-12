@@ -655,4 +655,26 @@ describe("Date Validator", () => {
 
   });
 
+  describe("End Date", () => {
+    it("should return success: true without message when the value is less than end date", () => {
+      const result = validator.date("Title", new Date("7/13/2018"), { endDate: new Date("12/15/2019") });
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an("array").that.is.empty;
+    });
+
+    it("should return success: false with message when the value is greater than end Date", () => {
+      const result = validator.date("Title", new Date("7/13/2018"), { endDate: new Date("12/15/2019") });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          validationFailMessages.maxLength,
+          { field: "Title", type: validationTypes.Date, maxLength: "3" },
+        ));
+    });
+  });
+
 });
