@@ -183,7 +183,7 @@ export default class Validator {
       success: true,
     };
 
-    if (typeof (value) !== "string") {
+    if (typeof (value) !== "object") {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.type || this.typeFailMessage,
