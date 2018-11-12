@@ -596,7 +596,7 @@ describe("Date Validator", () => {
 
   describe("Type", () => {
     it("should return success: true without message when the value is date", () => {
-      const result = validator.date("Title", "12/12/2018");
+      const result = validator.date("Title", new Date());
 
       expect(result.success).to.equal(true);
       // tslint:disable-next-line:no-unused-expression
