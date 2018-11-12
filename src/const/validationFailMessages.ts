@@ -9,6 +9,7 @@ const validationFailMessages: IValidationFailMessages = {
   minValue: "$field can't be less than $minValue!",
   noTrailingSpace: "$field must not contain any trailing spaces!",
   required: "$field is required!",
+  startDate: "$field can't be less than $startDate",
   type: "$field must be a $type!",
 };
 

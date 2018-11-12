@@ -677,4 +677,26 @@ describe("Date Validator", () => {
     });
   });
 
+  describe("Start Date", () => {
+    it("should return success: true without message when the value is greater than start Date", () => {
+      const result = validator.date("Title", new Date("7/13/2020"), { startDate: new Date("11/13/2018") });
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an("array").that.is.empty;
+    });
+
+    it("should return success: false with message when the value is less than start Date", () => {
+      const result = validator.date("Title", new Date("01/11/2018"), { startDate: new Date("11/13/2018")});
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          validationFailMessages.minValue,
+          { field: "Title", type: validationTypes.Number, minValue: "40" },
+        ));
+    });
+  });
+
 });
