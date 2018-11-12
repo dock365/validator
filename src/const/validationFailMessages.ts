@@ -1,6 +1,7 @@
 import { IValidationFailMessages } from "..";
 
 const validationFailMessages: IValidationFailMessages = {
+  endDate: "$field can't be greater than $endDate",
   include: "$field must include '$include'!",
   maxLength: "$field can't be greater than $maxLength charectors!",
   maxValue: "$field can't be greater than $maxValue!",
