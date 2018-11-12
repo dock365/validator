@@ -33,7 +33,6 @@ export interface INumberValidationOptions extends IBaseValidationOptions {
 }
 
 export interface IDateValidationOptions extends IBaseValidationOptions {
-  format?: string;
   before?: Date;
   after?: Date;
 }

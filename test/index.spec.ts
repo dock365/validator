@@ -603,8 +603,17 @@ describe("Date Validator", () => {
       expect(result.messages).to.be.an("array").that.is.empty;
     });
 
-    it("should return success: false with message when the value is not a date", () => {
+    it("should return success: false with message when the value is a string", () => {
       const result = validator.date("Title", "Not a date");
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(validationFailMessages.type, { field: "Title", type: validationTypes.Date }));
+    });
+
+    it("should return success: false with message when the value is object", () => {
+      const result = validator.date("Title", { value: "value" });
 
       expect(result.success).to.equal(false);
       expect(result.messages)
@@ -672,7 +681,7 @@ describe("Date Validator", () => {
         .to.be.an("array")
         .that.include(validationMessage(
           validationFailMessages.before,
-          { field: "Title", type: validationTypes.Date, before:  new Date("12/15/2019").toString() },
+          { field: "Title", type: validationTypes.Date, before: new Date("12/15/2019").toString() },
         ));
     });
   });
@@ -687,7 +696,7 @@ describe("Date Validator", () => {
     });
 
     it("should return success: false with message when the value is less than start Date", () => {
-      const result = validator.date("Title", new Date("01/11/2018"), { after: new Date("11/13/2018")});
+      const result = validator.date("Title", new Date("01/11/2018"), { after: new Date("11/13/2018") });
 
       expect(result.success).to.equal(false);
       expect(result.messages)
@@ -698,5 +707,4 @@ describe("Date Validator", () => {
         ));
     });
   });
-
 });
