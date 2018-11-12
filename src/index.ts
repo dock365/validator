@@ -11,6 +11,7 @@ export interface IValidationFailMessages {
   maxValue?: string;
   include?: string;
   noTrailingSpace?: string;
+  endDate?: string;
 }
 
 export interface IBaseValidationOptions {
@@ -41,7 +42,7 @@ export interface IValidationResponse {
 }
 
 export default class Validator {
-
+  private endDateFailMessage: string = validationFailMessages.endDate || "";
   private includeFailMessage: string = validationFailMessages.include || "";
   private maxLengthFailMessage: string = validationFailMessages.maxLength || "";
   private maxValueFailMessage: string = validationFailMessages.maxValue || "";
@@ -201,6 +202,14 @@ export default class Validator {
       response.messages.push(validationMessage(
         failMessages && failMessages.required || this.requiredFailMessage,
         { field, type: validationTypes.Date, value },
+      ));
+    }
+
+    if (options.endDate && value > options.endDate) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.endDate || this.endDateFailMessage,
+        { field, type: validationTypes.Date, maxValue: `${options.endDate}` },
       ));
     }
 
