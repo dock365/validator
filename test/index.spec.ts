@@ -672,7 +672,7 @@ describe("Date Validator", () => {
         .to.be.an("array")
         .that.include(validationMessage(
           validationFailMessages.endDate,
-          { field: "Title", type: validationTypes.Date, dueDate: "12/15/2019" },
+          { field: "Title", type: validationTypes.Date, endDate:  new Date("12/15/2019").toString() },
         ));
     });
   });
@@ -694,7 +694,7 @@ describe("Date Validator", () => {
         .to.be.an("array")
         .that.include(validationMessage(
           validationFailMessages.startDate,
-          { field: "Title", type: validationTypes.Date, startDate: "11/13/2018" },
+          { field: "Title", type: validationTypes.Date, startDate: new Date("11/13/2018").toString() },
         ));
     });
   });

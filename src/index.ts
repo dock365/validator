@@ -12,6 +12,7 @@ export interface IValidationFailMessages {
   include?: string;
   noTrailingSpace?: string;
   endDate?: string;
+  startDate?: string;
 }
 
 export interface IBaseValidationOptions {
@@ -34,6 +35,7 @@ export interface INumberValidationOptions extends IBaseValidationOptions {
 export interface IDateValidationOptions extends IBaseValidationOptions {
   format?: string;
   endDate?: Date;
+  startDate?: Date;
 }
 
 export interface IValidationResponse {
@@ -50,6 +52,7 @@ export default class Validator {
   private minValueFailMessage: string = validationFailMessages.minValue || "";
   private noTrailingSpaceFailMessage: string = validationFailMessages.noTrailingSpace || "";
   private requiredFailMessage: string = validationFailMessages.required || "";
+  private startDateFailMessage: string = validationFailMessages.startDate || "";
   private typeFailMessage: string = validationFailMessages.type || "";
 
   constructor(config?: { failMessages?: IValidationFailMessages }) {
@@ -209,7 +212,15 @@ export default class Validator {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.endDate || this.endDateFailMessage,
-        { field, type: validationTypes.Date, maxValue: `${options.endDate}` },
+        { field, type: validationTypes.Date, endDate: `${options.endDate}` },
+      ));
+    }
+
+    if (options.startDate && value < options.startDate) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.startDate || this.startDateFailMessage,
+        { field, type: validationTypes.Date, startDate: `${options.startDate}` },
       ));
     }
 
