@@ -11,8 +11,8 @@ export interface IValidationFailMessages {
   maxValue?: string;
   include?: string;
   noTrailingSpace?: string;
-  endDate?: string;
-  startDate?: string;
+  before?: string;
+  after?: string;
 }
 
 export interface IBaseValidationOptions {
@@ -34,8 +34,8 @@ export interface INumberValidationOptions extends IBaseValidationOptions {
 
 export interface IDateValidationOptions extends IBaseValidationOptions {
   format?: string;
-  endDate?: Date;
-  startDate?: Date;
+  before?: Date;
+  after?: Date;
 }
 
 export interface IValidationResponse {
@@ -44,7 +44,7 @@ export interface IValidationResponse {
 }
 
 export default class Validator {
-  private endDateFailMessage: string = validationFailMessages.endDate || "";
+  private beforeFailMessage: string = validationFailMessages.before || "";
   private includeFailMessage: string = validationFailMessages.include || "";
   private maxLengthFailMessage: string = validationFailMessages.maxLength || "";
   private maxValueFailMessage: string = validationFailMessages.maxValue || "";
@@ -52,7 +52,7 @@ export default class Validator {
   private minValueFailMessage: string = validationFailMessages.minValue || "";
   private noTrailingSpaceFailMessage: string = validationFailMessages.noTrailingSpace || "";
   private requiredFailMessage: string = validationFailMessages.required || "";
-  private startDateFailMessage: string = validationFailMessages.startDate || "";
+  private afterFailMessage: string = validationFailMessages.after || "";
   private typeFailMessage: string = validationFailMessages.type || "";
 
   constructor(config?: { failMessages?: IValidationFailMessages }) {
@@ -208,19 +208,19 @@ export default class Validator {
       ));
     }
 
-    if (options.endDate && value > options.endDate) {
+    if (options.before && value > options.before) {
       response.success = false;
       response.messages.push(validationMessage(
-        failMessages && failMessages.endDate || this.endDateFailMessage,
-        { field, type: validationTypes.Date, endDate: `${options.endDate}` },
+        failMessages && failMessages.before || this.beforeFailMessage,
+        { field, type: validationTypes.Date, before: `${options.before}` },
       ));
     }
 
-    if (options.startDate && value < options.startDate) {
+    if (options.after && value < options.after) {
       response.success = false;
       response.messages.push(validationMessage(
-        failMessages && failMessages.startDate || this.startDateFailMessage,
-        { field, type: validationTypes.Date, startDate: `${options.startDate}` },
+        failMessages && failMessages.after || this.afterFailMessage,
+        { field, type: validationTypes.Date, after: `${options.after}` },
       ));
     }
 

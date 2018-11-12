@@ -657,7 +657,7 @@ describe("Date Validator", () => {
 
   describe("End Date", () => {
     it("should return success: true without message when the value is less than end date", () => {
-      const result = validator.date("Title", new Date("7/13/2018"), { endDate: new Date("12/15/2019") });
+      const result = validator.date("Title", new Date("7/13/2018"), { before: new Date("12/15/2019") });
 
       expect(result.success).to.equal(true);
       // tslint:disable-next-line:no-unused-expression
@@ -665,21 +665,21 @@ describe("Date Validator", () => {
     });
 
     it("should return success: false with message when the value is greater than end Date", () => {
-      const result = validator.date("Title", new Date("7/13/2020"), { endDate: new Date("12/15/2019") });
+      const result = validator.date("Title", new Date("7/13/2020"), { before: new Date("12/15/2019") });
 
       expect(result.success).to.equal(false);
       expect(result.messages)
         .to.be.an("array")
         .that.include(validationMessage(
-          validationFailMessages.endDate,
-          { field: "Title", type: validationTypes.Date, endDate:  new Date("12/15/2019").toString() },
+          validationFailMessages.before,
+          { field: "Title", type: validationTypes.Date, before:  new Date("12/15/2019").toString() },
         ));
     });
   });
 
   describe("Start Date", () => {
     it("should return success: true without message when the value is greater than start Date", () => {
-      const result = validator.date("Title", new Date("7/13/2020"), { startDate: new Date("11/13/2018") });
+      const result = validator.date("Title", new Date("7/13/2020"), { after: new Date("11/13/2018") });
 
       expect(result.success).to.equal(true);
       // tslint:disable-next-line:no-unused-expression
@@ -687,14 +687,14 @@ describe("Date Validator", () => {
     });
 
     it("should return success: false with message when the value is less than start Date", () => {
-      const result = validator.date("Title", new Date("01/11/2018"), { startDate: new Date("11/13/2018")});
+      const result = validator.date("Title", new Date("01/11/2018"), { after: new Date("11/13/2018")});
 
       expect(result.success).to.equal(false);
       expect(result.messages)
         .to.be.an("array")
         .that.include(validationMessage(
-          validationFailMessages.startDate,
-          { field: "Title", type: validationTypes.Date, startDate: new Date("11/13/2018").toString() },
+          validationFailMessages.after,
+          { field: "Title", type: validationTypes.Date, after: new Date("11/13/2018").toString() },
         ));
     });
   });
