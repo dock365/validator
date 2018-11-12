@@ -22,11 +22,16 @@ export interface IStringValidationOptions extends IBaseValidationOptions {
   maxLength?: number;
   include?: string;
   noTrailingSpace?: boolean;
+  regx?: string;
 }
 
 export interface INumberValidationOptions extends IBaseValidationOptions {
   minValue?: number;
   maxValue?: number;
+}
+
+export interface IDateValidationOptions extends IBaseValidationOptions {
+  format?: string;
 }
 
 export interface IValidationResponse {
@@ -170,13 +175,25 @@ export default class Validator {
   public date(
     field: string,
     value: any,
-    options?: INumberValidationOptions,
+    options?: IDateValidationOptions,
     failMessages?: IValidationFailMessages,
   ): IValidationResponse {
     const response: IValidationResponse = {
       messages: [],
       success: true,
     };
+
+    if (typeof (value) !== "string") {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.type || this.typeFailMessage,
+        { field, type: validationTypes.Date, value },
+      ));
+    }
+
+    if (!options) {
+      return response;
+    }
 
     return response;
   }

@@ -590,3 +590,69 @@ describe("Number Validator With Initialized Custome Message", () => {
     });
   });
 });
+
+describe("Date Validator", () => {
+  const validator = new Validator();
+
+  describe("Type", () => {
+    it("should return success: true without message when the value is date", () => {
+      const result = validator.date("Title", "12/12/2018");
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an("array").that.is.empty;
+    });
+
+    it("should return success: false with message when the value is not a date", () => {
+      const result = validator.date("Title", "Not a date");
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(validationFailMessages.type, { field: "Title", type: validationTypes.Date }));
+    });
+  });
+
+  describe("Required", () => {
+    it("should return success: true without message when the value is present", () => {
+      const result = validator.date("Title", "10/10/2018", { required: true });
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages)
+        .to.be.an("array")
+        .that.is.empty;
+    });
+
+    it("should return success: false with message when the value is not present", () => {
+      const result = validator.date("Title", "", { required: true });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          validationFailMessages.required,
+          { field: "Title", type: validationTypes.Date },
+        ));
+    });
+
+    it("should return success: false with custom message when the value is not present", () => {
+      const result = validator.date(
+        "Title",
+        "",
+        { required: true },
+        { required: "$title Custom required message" },
+      );
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an("array")
+        .that.include(validationMessage(
+          "$title Custom required message",
+          { field: "Title", type: validationTypes.Date },
+        ));
+    });
+
+  });
+
+});
