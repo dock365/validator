@@ -664,7 +664,7 @@ describe("Date Validator", () => {
 
   });
 
-  describe("End Date", () => {
+  describe("before", () => {
     it("should return success: true without message when the value is less than end date", () => {
       const result = validator.date("Title", new Date("7/13/2018"), { before: new Date("12/15/2019") });
 
@@ -686,7 +686,7 @@ describe("Date Validator", () => {
     });
   });
 
-  describe("Start Date", () => {
+  describe("after", () => {
     it("should return success: true without message when the value is greater than start Date", () => {
       const result = validator.date("Title", new Date("7/13/2020"), { after: new Date("11/13/2018") });
 

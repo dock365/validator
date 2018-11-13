@@ -187,7 +187,7 @@ export default class Validator {
       success: true,
     };
 
-    if (typeof (value) !== "object") {
+    if ( (value) instanceof Date !== true) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.type || this.typeFailMessage,
