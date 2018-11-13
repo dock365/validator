@@ -61,6 +61,7 @@ export default class Validator {
   private afterFailMessage: string = validationFailMessages.after || "";
   private typeFailMessage: string = validationFailMessages.type || "";
   private structureFailMessage: string = validationFailMessages.structure || "";
+  private doaminFailMessage: string = validationFailMessages.domain || "";
 
   constructor(config?: { failMessages?: IValidationFailMessages }) {
     if (config) {
@@ -195,7 +196,7 @@ export default class Validator {
       success: true,
     };
 
-    if ( (value) instanceof Date !== true) {
+    if ((value) instanceof Date !== true) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.type || this.typeFailMessage,
@@ -262,7 +263,16 @@ export default class Validator {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.structure || this.structureFailMessage,
-        { field, type: validationTypes.Email, value},
+        { field, type: validationTypes.Email, value },
+      ));
+    }
+
+    const domain = value.indexOf(".com");
+    if (domain < 0) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.domain || this.doaminFailMessage,
+        { field, type: validationTypes.Email, value },
       ));
     }
 
