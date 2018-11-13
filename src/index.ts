@@ -268,15 +268,18 @@ export default class Validator {
       ));
     }
 
-    const domain = value.split("@");
-    if (options.extension !== undefined && options.extension && !domain) {
+    if (options.extension) {
+      const emailArray = value.split("@");
+      if (emailArray[1] === options.extension) {
+        response.success = true;
+      } else {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.domain || this.doaminFailMessage,
         { field, type: validationTypes.Email, value },
       ));
+      }
     }
-
     return response;
   }
 
