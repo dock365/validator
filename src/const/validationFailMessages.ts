@@ -1,8 +1,8 @@
 import { IValidationFailMessages } from "..";
 
 const validationFailMessages: IValidationFailMessages = {
-  after: "$field can't be less than $after",
-  before: "$field can't be greater than $before",
+  after: "$field must be be less than $after",
+  before: "$field must be greater than $before",
   domain: "$field must contain a $domain",
   include: "$field must include '$include'!",
   maxLength: "$field can't be greater than $maxLength charectors!",
@@ -11,7 +11,7 @@ const validationFailMessages: IValidationFailMessages = {
   minValue: "$field can't be less than $minValue!",
   noTrailingSpace: "$field must not contain any trailing spaces!",
   required: "$field is required!",
-  structure: "$field must contain 'symbol @'",
+  structure: "$field must contain 'symbol @' and the name must include 6 characters",
   type: "$field must be a $type!",
 };
 

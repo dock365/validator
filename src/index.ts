@@ -258,8 +258,8 @@ export default class Validator {
       ));
     }
 
-    const seperator = value.includes("@");
-    if (!seperator) {
+    const seperator = value.search("@");
+    if (seperator < 6) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.structure || this.structureFailMessage,

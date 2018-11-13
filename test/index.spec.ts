@@ -131,7 +131,7 @@ describe("String Validator", () => {
     });
 
     it("should return success: false with message when the value is greater than max length", () => {
-      const result = validator.string("Title", "abcd", { maxLength: 3 });
+      const result = validator.string("Title", "abcdefd", { maxLength: 3 });
 
       expect(result.success).to.equal(false);
       expect(result.messages)
@@ -145,7 +145,7 @@ describe("String Validator", () => {
     it("should return success: false with custom message when the value is greater than max length", () => {
       const result = validator.string(
         "Title",
-        "abcd",
+        "abcdefd",
         { maxLength: 3 },
         { maxLength: "$title Custom maxLength message" },
       );
@@ -296,7 +296,7 @@ describe("String Validator With Initialized Custome Message", () => {
 
   describe("Max Length", () => {
     it("should return success: false with message when the value is greater than max length", () => {
-      const result = validator.string("Title", "abcd", { maxLength: 3 });
+      const result = validator.string("Title", "abcdefd", { maxLength: 3 });
 
       expect(result.success).to.equal(false);
       expect(result.messages)
@@ -739,7 +739,7 @@ describe("Email Validator", () => {
 
   describe("Structure", () => {
     it("should return success: true without message when symbol '@' is present", () => {
-      const result = validator.email("Title", "schweinsteigar@email.com", { structure: "abc@mail.com" });
+      const result = validator.email("Title", "schweinsteigar@email.com", { structure: "abcdef@email.com" });
 
       expect(result.success).to.equal(true);
       // tslint:disable-next-line:no-unused-expression
@@ -749,7 +749,19 @@ describe("Email Validator", () => {
     });
 
     it("should return success: false with message when the symbol '@' is not present", () => {
-      const result = validator.email("Title", "schweinsteigar#email.com", { structure: "abc@mail.com" });
+      const result = validator.email("Title", "schweinsteigar#email.com", { structure: "abcdefdef@email.com" });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+      .to.be.an("array")
+      .that.include(validationMessage(
+        validationFailMessages.structure,
+        {field: "Title", type: validationTypes.Email},
+      ));
+    });
+
+    it("should return success: false with message when the email name has not enough strength", () => {
+      const result = validator.email("Title", "schw@emailcom", { structure: "abcdef@email.com" });
 
       expect(result.success).to.equal(false);
       expect(result.messages)
@@ -763,7 +775,7 @@ describe("Email Validator", () => {
 
   describe("Domain", () => {
     it("should return success: true without message when 'domain' is present", () => {
-      const result = validator.email("Title", "schweinsteigar@email.com", { domain: "abc@mail.com"});
+      const result = validator.email("Title", "schweinsteigar@email.com", { domain: "abcdef@email.com"});
 
       expect(result.success).to.equal(true);
       // tslint:disable-next-line:no-unused-expression
@@ -773,7 +785,7 @@ describe("Email Validator", () => {
     });
 
     it("should return success: false with message when 'domain' is not present", () => {
-      const result = validator.email("Title", "schweinsteigar#emailcom", { domain: "abc@mail.com" });
+      const result = validator.email("Title", "schweinsteigar#emailcom", { domain: "abcdef@email.com" });
 
       expect(result.success).to.equal(false);
       expect(result.messages)
