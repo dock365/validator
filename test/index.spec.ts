@@ -737,9 +737,9 @@ describe("Email Validator", () => {
 
   });
 
-  describe("Structure", () => {
+  describe("Type", () => {
     it("should return success: true without message when symbol '@' is present", () => {
-      const result = validator.email("Title", "schweinsteigar@email.com", { structure: "abcdef@email.com" });
+      const result = validator.email("Title", "schweinsteigar@email.com");
 
       expect(result.success).to.equal(true);
       // tslint:disable-next-line:no-unused-expression
@@ -749,25 +749,25 @@ describe("Email Validator", () => {
     });
 
     it("should return success: false with message when the symbol '@' is not present", () => {
-      const result = validator.email("Title", "schweinsteigar#email.com", { structure: "abcdefdef@email.com" });
+      const result = validator.email("Title", "schweinsteigar#email.com");
 
       expect(result.success).to.equal(false);
       expect(result.messages)
       .to.be.an("array")
       .that.include(validationMessage(
-        validationFailMessages.structure,
+        validationFailMessages.domain,
         {field: "Title", type: validationTypes.Email},
       ));
     });
 
     it("should return success: false with message when the email name has not enough strength", () => {
-      const result = validator.email("Title", "schw@emailcom", { structure: "abcdef@email.com" });
+      const result = validator.email("Title", "schw@emailcom");
 
       expect(result.success).to.equal(false);
       expect(result.messages)
       .to.be.an("array")
       .that.include(validationMessage(
-        validationFailMessages.structure,
+        validationFailMessages.domain,
         {field: "Title", type: validationTypes.Email},
       ));
     });

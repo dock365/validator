@@ -40,8 +40,8 @@ export interface IDateValidationOptions extends IBaseValidationOptions {
 }
 
 export interface IEmailValidationOptions extends IBaseValidationOptions {
-  structure?: string;
   domain?: string;
+  extension?: string;
 }
 
 export interface IValidationResponse {
@@ -258,8 +258,9 @@ export default class Validator {
       ));
     }
 
-    const seperator = value.search("@");
-    if (seperator < 6) {
+    const regEx: RegExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+
+    if (!regEx.test(value)) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.structure || this.structureFailMessage,
@@ -267,8 +268,8 @@ export default class Validator {
       ));
     }
 
-    const domain = value.indexOf(".com");
-    if (domain < 0) {
+    const domain = value.split("@");
+    if (options.extension !== undefined && options.extension && !domain) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.domain || this.doaminFailMessage,
