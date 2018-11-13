@@ -37,6 +37,10 @@ export interface IDateValidationOptions extends IBaseValidationOptions {
   after?: Date;
 }
 
+export interface IEmailValidationOptions extends IBaseValidationOptions {
+  structure?: string;
+}
+
 export interface IValidationResponse {
   success: boolean;
   messages: string[];
@@ -229,13 +233,25 @@ export default class Validator {
   public email(
     field: string,
     value: any,
-    options?: INumberValidationOptions,
+    options?: IEmailValidationOptions,
     failMessages?: IValidationFailMessages,
   ): IValidationResponse {
     const response: IValidationResponse = {
       messages: [],
       success: true,
     };
+
+    if (!options) {
+      return response;
+    }
+
+    if (options.required !== undefined && options.required && !value) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.required || this.requiredFailMessage,
+        { field, type: validationTypes.Email, value },
+      ));
+    }
 
     return response;
   }
