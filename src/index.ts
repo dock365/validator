@@ -13,6 +13,7 @@ export interface IValidationFailMessages {
   noTrailingSpace?: string;
   before?: string;
   after?: string;
+  structure?: string;
 }
 
 export interface IBaseValidationOptions {
@@ -57,6 +58,7 @@ export default class Validator {
   private requiredFailMessage: string = validationFailMessages.required || "";
   private afterFailMessage: string = validationFailMessages.after || "";
   private typeFailMessage: string = validationFailMessages.type || "";
+  private structureFailMessage: string = validationFailMessages.structure || "";
 
   constructor(config?: { failMessages?: IValidationFailMessages }) {
     if (config) {
@@ -250,6 +252,15 @@ export default class Validator {
       response.messages.push(validationMessage(
         failMessages && failMessages.required || this.requiredFailMessage,
         { field, type: validationTypes.Email, value },
+      ));
+    }
+
+    const seperator = value.includes("@");
+    if (!seperator) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.structure || this.structureFailMessage,
+        { field, type: validationTypes.Email, value},
       ));
     }
 

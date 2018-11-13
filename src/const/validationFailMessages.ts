@@ -10,6 +10,7 @@ const validationFailMessages: IValidationFailMessages = {
   minValue: "$field can't be less than $minValue!",
   noTrailingSpace: "$field must not contain any trailing spaces!",
   required: "$field is required!",
+  structure: "$field must contain 'symbol @",
   type: "$field must be a $type!",
 };
 
