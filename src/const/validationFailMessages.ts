@@ -3,6 +3,7 @@ import { IValidationFailMessages } from "..";
 const validationFailMessages: IValidationFailMessages = {
   after: "$field can't be less than $after",
   before: "$field can't be greater than $before",
+  domain: "$field must contain a doamin",
   include: "$field must include '$include'!",
   maxLength: "$field can't be greater than $maxLength charectors!",
   maxValue: "$field can't be greater than $maxValue!",

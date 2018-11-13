@@ -14,6 +14,7 @@ export interface IValidationFailMessages {
   before?: string;
   after?: string;
   structure?: string;
+  domain?: string;
 }
 
 export interface IBaseValidationOptions {
@@ -40,6 +41,7 @@ export interface IDateValidationOptions extends IBaseValidationOptions {
 
 export interface IEmailValidationOptions extends IBaseValidationOptions {
   structure?: string;
+  domain?: string;
 }
 
 export interface IValidationResponse {

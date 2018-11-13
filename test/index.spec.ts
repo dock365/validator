@@ -749,13 +749,37 @@ describe("Email Validator", () => {
     });
 
     it("should return success: false with message when the symbol '@' is not present", () => {
-      const result = validator.email("Title", "schweinsteigar#emailcom", { structure: "abc@mail.com" });
+      const result = validator.email("Title", "schweinsteigar#email.com", { structure: "abc@mail.com" });
 
       expect(result.success).to.equal(false);
       expect(result.messages)
       .to.be.an("array")
       .that.include(validationMessage(
         validationFailMessages.structure,
+        {field: "Title", type: validationTypes.Email},
+      ));
+    });
+  });
+
+  describe("Domain", () => {
+    it("should return success: true without message when 'domain' is present", () => {
+      const result = validator.email("Title", "schweinsteigar@email.com", { domain: "abc@mail.com"});
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages)
+      .to.be.an("array")
+      .that.is.empty;
+    });
+
+    it("should return success: false with message when 'domain' is not present", () => {
+      const result = validator.email("Title", "schweinsteigar#emailcom", { domain: "abc@mail.com" });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+      .to.be.an("array")
+      .that.include(validationMessage(
+        validationFailMessages.domain,
         {field: "Title", type: validationTypes.Email},
       ));
     });
