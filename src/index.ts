@@ -11,6 +11,10 @@ export interface IValidationFailMessages {
   maxValue?: string;
   include?: string;
   noTrailingSpace?: string;
+  before?: string;
+  after?: string;
+  structure?: string;
+  extension?: string;
 }
 
 export interface IBaseValidationOptions {
@@ -22,11 +26,21 @@ export interface IStringValidationOptions extends IBaseValidationOptions {
   maxLength?: number;
   include?: string;
   noTrailingSpace?: boolean;
+  regx?: string;
 }
 
 export interface INumberValidationOptions extends IBaseValidationOptions {
   minValue?: number;
   maxValue?: number;
+}
+
+export interface IDateValidationOptions extends IBaseValidationOptions {
+  before?: Date;
+  after?: Date;
+}
+
+export interface IEmailValidationOptions extends IBaseValidationOptions {
+  extension?: string;
 }
 
 export interface IValidationResponse {
@@ -35,7 +49,7 @@ export interface IValidationResponse {
 }
 
 export default class Validator {
-
+  private beforeFailMessage: string = validationFailMessages.before || "";
   private includeFailMessage: string = validationFailMessages.include || "";
   private maxLengthFailMessage: string = validationFailMessages.maxLength || "";
   private maxValueFailMessage: string = validationFailMessages.maxValue || "";
@@ -43,7 +57,9 @@ export default class Validator {
   private minValueFailMessage: string = validationFailMessages.minValue || "";
   private noTrailingSpaceFailMessage: string = validationFailMessages.noTrailingSpace || "";
   private requiredFailMessage: string = validationFailMessages.required || "";
+  private afterFailMessage: string = validationFailMessages.after || "";
   private typeFailMessage: string = validationFailMessages.type || "";
+  private doaminFailMessage: string = validationFailMessages.extension || "";
 
   constructor(config?: { failMessages?: IValidationFailMessages }) {
     if (config) {
@@ -170,13 +186,49 @@ export default class Validator {
   public date(
     field: string,
     value: any,
-    options?: INumberValidationOptions,
+    options?: IDateValidationOptions,
     failMessages?: IValidationFailMessages,
   ): IValidationResponse {
     const response: IValidationResponse = {
       messages: [],
       success: true,
     };
+
+    if ((value) instanceof Date !== true) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.type || this.typeFailMessage,
+        { field, type: validationTypes.Date, value },
+      ));
+    }
+
+    if (!options) {
+      return response;
+    }
+
+    if (options.required !== undefined && options.required && !value) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.required || this.requiredFailMessage,
+        { field, type: validationTypes.Date, value },
+      ));
+    }
+
+    if (options.before && value > options.before) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.before || this.beforeFailMessage,
+        { field, type: validationTypes.Date, before: `${options.before}` },
+      ));
+    }
+
+    if (options.after && value < options.after) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.after || this.afterFailMessage,
+        { field, type: validationTypes.Date, after: `${options.after}` },
+      ));
+    }
 
     return response;
   }
@@ -184,7 +236,7 @@ export default class Validator {
   public email(
     field: string,
     value: any,
-    options?: INumberValidationOptions,
+    options?: IEmailValidationOptions,
     failMessages?: IValidationFailMessages,
   ): IValidationResponse {
     const response: IValidationResponse = {
@@ -192,6 +244,38 @@ export default class Validator {
       success: true,
     };
 
+    const regEx: RegExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+
+    if (!regEx.test(value)) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.type || this.typeFailMessage,
+        { field, type: validationTypes.Email, value },
+      ));
+    }
+
+    if (!options) {
+      return response;
+    }
+
+    if (options.required !== undefined && options.required && !value) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.required || this.requiredFailMessage,
+        { field, type: validationTypes.Email, value },
+      ));
+    }
+
+    if (options.extension) {
+      const emailArray = value.split("@");
+      if (emailArray[1] !== options.extension) {
+        response.success = false;
+        response.messages.push(validationMessage(
+          failMessages && failMessages.extension || this.doaminFailMessage,
+          { field, type: validationTypes.Email, value },
+        ));
+      }
+    }
     return response;
   }
 
