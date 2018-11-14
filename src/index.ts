@@ -14,7 +14,7 @@ export interface IValidationFailMessages {
   before?: string;
   after?: string;
   structure?: string;
-  domain?: string;
+  extension?: string;
 }
 
 export interface IBaseValidationOptions {
@@ -40,7 +40,6 @@ export interface IDateValidationOptions extends IBaseValidationOptions {
 }
 
 export interface IEmailValidationOptions extends IBaseValidationOptions {
-  domain?: string;
   extension?: string;
 }
 
@@ -60,7 +59,7 @@ export default class Validator {
   private requiredFailMessage: string = validationFailMessages.required || "";
   private afterFailMessage: string = validationFailMessages.after || "";
   private typeFailMessage: string = validationFailMessages.type || "";
-  private doaminFailMessage: string = validationFailMessages.domain || "";
+  private doaminFailMessage: string = validationFailMessages.extension || "";
 
   constructor(config?: { failMessages?: IValidationFailMessages }) {
     if (config) {
@@ -267,18 +266,16 @@ export default class Validator {
       ));
     }
 
-    // if (options.extension) {
-    //   const emailArray = value.split("@");
-    //   if (emailArray[1] === options.extension) {
-    //     response.success = true;
-    //   } else {
-    //   response.success = false;
-    //   response.messages.push(validationMessage(
-    //     failMessages && failMessages.domain || this.doaminFailMessage,
-    //     { field, type: validationTypes.Email, value },
-    //   ));
-    //   }
-    // }
+    if (options.extension) {
+      const emailArray = value.split("@");
+      if (emailArray[1] !== options.extension) {
+        response.success = false;
+        response.messages.push(validationMessage(
+          failMessages && failMessages.extension || this.doaminFailMessage,
+          { field, type: validationTypes.Email, value },
+        ));
+      }
+    }
     return response;
   }
 
