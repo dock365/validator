@@ -755,7 +755,7 @@ describe("Email Validator", () => {
       expect(result.messages)
       .to.be.an("array")
       .that.include(validationMessage(
-        validationFailMessages.domain,
+        validationFailMessages.type,
         {field: "Title", type: validationTypes.Email},
       ));
     });
@@ -767,33 +767,33 @@ describe("Email Validator", () => {
       expect(result.messages)
       .to.be.an("array")
       .that.include(validationMessage(
-        validationFailMessages.domain,
+        validationFailMessages.type,
         {field: "Title", type: validationTypes.Email},
       ));
     });
   });
 
-  describe("Domain", () => {
-    it("should return success: true without message when 'domain' is present", () => {
-      const result = validator.email("Title", "schweinsteigar@email.com", { domain: "abcdef@email.com"});
+  // describe("Domain", () => {
+  //   it("should return success: true without message when 'domain' is present", () => {
+  //     const result = validator.email("Title", "schweinsteigar@email.com", { domain: "abcdef@email.com"});
 
-      expect(result.success).to.equal(true);
-      // tslint:disable-next-line:no-unused-expression
-      expect(result.messages)
-      .to.be.an("array")
-      .that.is.empty;
-    });
+  //     expect(result.success).to.equal(true);
+  //     // tslint:disable-next-line:no-unused-expression
+  //     expect(result.messages)
+  //     .to.be.an("array")
+  //     .that.is.empty;
+  //   });
 
-    it("should return success: false with message when 'domain' is not present", () => {
-      const result = validator.email("Title", "schweinsteigar#emailcom", { domain: "abcdef@email.com" });
+  //   it("should return success: false with message when 'domain' is not present", () => {
+  //     const result = validator.email("Title", "schweinsteigar#emailcom", { domain: "abcdef@email.com" });
 
-      expect(result.success).to.equal(false);
-      expect(result.messages)
-      .to.be.an("array")
-      .that.include(validationMessage(
-        validationFailMessages.domain,
-        {field: "Title", type: validationTypes.Email},
-      ));
-    });
-  });
+  //     expect(result.success).to.equal(false);
+  //     expect(result.messages)
+  //     .to.be.an("array")
+  //     .that.include(validationMessage(
+  //       validationFailMessages.domain,
+  //       {field: "Title", type: validationTypes.Email},
+  //     ));
+  //   });
+  // });
 });

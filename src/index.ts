@@ -60,7 +60,6 @@ export default class Validator {
   private requiredFailMessage: string = validationFailMessages.required || "";
   private afterFailMessage: string = validationFailMessages.after || "";
   private typeFailMessage: string = validationFailMessages.type || "";
-  private structureFailMessage: string = validationFailMessages.structure || "";
   private doaminFailMessage: string = validationFailMessages.domain || "";
 
   constructor(config?: { failMessages?: IValidationFailMessages }) {
@@ -246,6 +245,16 @@ export default class Validator {
       success: true,
     };
 
+    const regEx: RegExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+
+    if (!regEx.test(value)) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.type || this.typeFailMessage,
+        { field, type: validationTypes.Email, value },
+      ));
+    }
+
     if (!options) {
       return response;
     }
@@ -258,28 +267,18 @@ export default class Validator {
       ));
     }
 
-    const regEx: RegExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-
-    if (!regEx.test(value)) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.structure || this.structureFailMessage,
-        { field, type: validationTypes.Email, value },
-      ));
-    }
-
-    if (options.extension) {
-      const emailArray = value.split("@");
-      if (emailArray[1] === options.extension) {
-        response.success = true;
-      } else {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.domain || this.doaminFailMessage,
-        { field, type: validationTypes.Email, value },
-      ));
-      }
-    }
+    // if (options.extension) {
+    //   const emailArray = value.split("@");
+    //   if (emailArray[1] === options.extension) {
+    //     response.success = true;
+    //   } else {
+    //   response.success = false;
+    //   response.messages.push(validationMessage(
+    //     failMessages && failMessages.domain || this.doaminFailMessage,
+    //     { field, type: validationTypes.Email, value },
+    //   ));
+    //   }
+    // }
     return response;
   }
 
