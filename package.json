@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/codebraces/validator#readme",
   "devDependencies": {
-    "@braces/tslint-config-airbnb": "^5.11.3",
+    "@braces/tslint-config": "^0.1.0",
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.5",
     "chai": "^4.1.2",
