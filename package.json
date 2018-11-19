@@ -1,6 +1,6 @@
 {
   "name": "@dock365/validator",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,7 @@
     "patch-release": "npm version patch && npm publish --access=public && git push --follow-tags",
     "minor-release": "npm version minor && npm publish --access=public && git push --follow-tags",
     "major-release": "npm version major && npm publish --access=public && git push --follow-tags",
-    "test": "mocha -r ts-node/register --watch-extensions ts,tsx 'test/**/*.spec.ts' 'src/**/*.ts'"
+    "test": "mocha -r ts-node/register --watch-extensions ts,tsx \"test/**/*.spec.ts\" \"src/**/*.ts\""
   },
   "repository": {
     "type": "git",
