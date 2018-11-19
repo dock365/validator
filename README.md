@@ -1,6 +1,6 @@
 # Validator
 [![Build Status](https://travis-ci.org/codebraces/validator.svg?branch=master)](https://travis-ci.org/codebraces/validator)
-[![npm Version](https://img.shields.io/npm/v/@braces/validator.svg)](https://www.npmjs.com/package/@braces/validator)
+[![npm Version](https://img.shields.io/npm/v/@dock365/validator.svg)](https://www.npmjs.com/package/@dock365/validator)
 
 
 A general purpose validation library to validate strings or numbers.
@@ -8,17 +8,17 @@ A general purpose validation library to validate strings or numbers.
 ## Install
   ```bash
   # Using yarn package manager
-  $ yarn add @braces/validator
+  $ yarn add @dock365/validator
 
   # Using npm package manager
-  $ npm install --save @braces/validator
+  $ npm install --save @dock365/validator
   ```
 
 ## Usage
 Initialize new validator instance with default configurations
 
   ```javascript
-  import Validator from "@braces/validator";
+  import Validator from "@dock365/validator";
 
   const validator = new Validator();
   ```
@@ -31,7 +31,7 @@ Initialize new validator instance with custom fail messages.
 * `$value` will be replaced with value to be validated.
 
 ```javascript
-import Validator from "@braces/validator";
+import Validator from "@dock365/validator";
 
 const validator = new Validator({
   failMessages: {
