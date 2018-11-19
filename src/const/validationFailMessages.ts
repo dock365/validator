@@ -1,9 +1,21 @@
-import { IValidationFailMessages } from "..";
+export interface IValidationFailMessages {
+  type?: string;
+  required?: string;
+  minLength?: string;
+  maxLength?: string;
+  minValue?: string;
+  maxValue?: string;
+  include?: string;
+  noTrailingSpace?: string;
+  before?: string;
+  after?: string;
+  extension?: string;
+}
 
 const validationFailMessages: IValidationFailMessages = {
   after: "$field must be be less than $after",
   before: "$field must be greater than $before",
-  extension: "$field must contain a $extension",
+  extension: "$field extension must be $extension",
   include: "$field must include '$include'!",
   maxLength: "$field can't be greater than $maxLength charectors!",
   maxValue: "$field can't be greater than $maxValue!",
