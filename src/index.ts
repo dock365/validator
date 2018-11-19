@@ -1,65 +1,29 @@
-import validationFailMessages from "./const/validationFailMessages";
-import validationTypes from "./const/validationTypes";
-import validationMessage from "./libs/validationMessage";
-
-export interface IValidationFailMessages {
-  type?: string;
-  required?: string;
-  minLength?: string;
-  maxLength?: string;
-  minValue?: string;
-  maxValue?: string;
-  include?: string;
-  noTrailingSpace?: string;
-  before?: string;
-  after?: string;
-  structure?: string;
-  extension?: string;
-}
-
-export interface IBaseValidationOptions {
-  required?: boolean;
-}
-
-export interface IStringValidationOptions extends IBaseValidationOptions {
-  minLength?: number;
-  maxLength?: number;
-  include?: string;
-  noTrailingSpace?: boolean;
-  regx?: string;
-}
-
-export interface INumberValidationOptions extends IBaseValidationOptions {
-  minValue?: number;
-  maxValue?: number;
-}
-
-export interface IDateValidationOptions extends IBaseValidationOptions {
-  before?: Date;
-  after?: Date;
-}
-
-export interface IEmailValidationOptions extends IBaseValidationOptions {
-  extension?: string;
-}
-
-export interface IValidationResponse {
-  success: boolean;
-  messages: string[];
-}
+import validationFailMessages, { IValidationFailMessages } from './const/validationFailMessages';
+import { emailValidateMethodType, dateValidateMethodType, numberValidateMethodType, stringValidateMethodType } from './validators/IValidator';
+import StringValidator from './validators/StringValidator';
+import NumberValidator from './validators/NumberValidator';
+import DateValidator from './validators/DateValidator';
+import EmailValidator from './validators/EmailValidator';
 
 export default class Validator {
-  private beforeFailMessage: string = validationFailMessages.before || "";
-  private includeFailMessage: string = validationFailMessages.include || "";
-  private maxLengthFailMessage: string = validationFailMessages.maxLength || "";
-  private maxValueFailMessage: string = validationFailMessages.maxValue || "";
-  private minLengthFailMessage: string = validationFailMessages.minLength || "";
-  private minValueFailMessage: string = validationFailMessages.minValue || "";
-  private noTrailingSpaceFailMessage: string = validationFailMessages.noTrailingSpace || "";
-  private requiredFailMessage: string = validationFailMessages.required || "";
-  private afterFailMessage: string = validationFailMessages.after || "";
-  private typeFailMessage: string = validationFailMessages.type || "";
-  private doaminFailMessage: string = validationFailMessages.extension || "";
+  public string: stringValidateMethodType;
+  public number: numberValidateMethodType;
+  public date: dateValidateMethodType;
+  public email: emailValidateMethodType;
+
+  private validationFailMessages: IValidationFailMessages = {
+    before: validationFailMessages.before || '',
+    include: validationFailMessages.include || '',
+    maxLength: validationFailMessages.maxLength || '',
+    maxValue: validationFailMessages.maxValue || '',
+    minLength: validationFailMessages.minLength || '',
+    minValue: validationFailMessages.minValue || '',
+    noTrailingSpace: validationFailMessages.noTrailingSpace || '',
+    required: validationFailMessages.required || '',
+    after: validationFailMessages.after || '',
+    type: validationFailMessages.type || '',
+    extension: validationFailMessages.extension || '',
+  };
 
   constructor(config?: { failMessages?: IValidationFailMessages }) {
     if (config) {
@@ -67,228 +31,37 @@ export default class Validator {
         this._initializaValidationMessages(config.failMessages);
       }
     }
-  }
 
-  public string(
-    field: string,
-    value: any,
-    options?: IStringValidationOptions,
-    failMessages?: IValidationFailMessages,
-  ): IValidationResponse {
-    const response: IValidationResponse = {
-      messages: [],
-      success: true,
-    };
-
-    if (typeof (value) !== "string") {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.type || this.typeFailMessage,
-        { field, type: validationTypes.String, value },
-      ));
-    }
-    if (!options) {
-      return response;
-    }
-
-    if (options.required !== undefined && options.required && !value) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.required || this.requiredFailMessage,
-        { field, type: validationTypes.String, value },
-      ));
-    }
-
-    if (options.maxLength && value.length > options.maxLength) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.maxLength || this.maxLengthFailMessage,
-        { field, type: validationTypes.String, maxLength: `${options.maxLength}` },
-      ));
-    }
-
-    if (options.minLength && value.length < options.minLength) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.minLength || this.minLengthFailMessage,
-        { field, type: validationTypes.String, minLength: `${options.minLength}` },
-      ));
-    }
-
-    if (options.include && `${value}`.indexOf(options.include) < 0) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.include || this.includeFailMessage,
-        { field, type: validationTypes.String, include: options.include },
-      ));
-    }
-
-    if (options.noTrailingSpace && `${value}`.trim().length !== `${value}`.length) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.noTrailingSpace || this.noTrailingSpaceFailMessage,
-        { field, type: validationTypes.String },
-      ));
-    }
-
-    return response;
-  }
-
-  public number(
-    field: string,
-    value: any,
-    options?: INumberValidationOptions,
-    failMessages?: IValidationFailMessages,
-  ): IValidationResponse {
-    const response: IValidationResponse = {
-      messages: [],
-      success: true,
-    };
-
-    if (typeof (value) !== "number") {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.type || this.typeFailMessage,
-        { field, type: validationTypes.Number, value },
-      ));
-    }
-    if (!options) {
-      return response;
-    }
-
-    if (options.required !== undefined && options.required && !value) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.required || this.requiredFailMessage,
-        { field, type: validationTypes.String, value },
-      ));
-    }
-
-    if (options.maxValue && value > options.maxValue) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.maxValue || this.maxValueFailMessage,
-        { field, type: validationTypes.String, maxValue: `${options.maxValue}` },
-      ));
-    }
-
-    if (options.minValue && value < options.minValue) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.minValue || this.minValueFailMessage,
-        { field, type: validationTypes.String, minValue: `${options.minValue}` },
-      ));
-    }
-
-    return response;
-  }
-
-  public date(
-    field: string,
-    value: any,
-    options?: IDateValidationOptions,
-    failMessages?: IValidationFailMessages,
-  ): IValidationResponse {
-    const response: IValidationResponse = {
-      messages: [],
-      success: true,
-    };
-
-    if ((value) instanceof Date !== true) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.type || this.typeFailMessage,
-        { field, type: validationTypes.Date, value },
-      ));
-    }
-
-    if (!options) {
-      return response;
-    }
-
-    if (options.required !== undefined && options.required && !value) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.required || this.requiredFailMessage,
-        { field, type: validationTypes.Date, value },
-      ));
-    }
-
-    if (options.before && value > options.before) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.before || this.beforeFailMessage,
-        { field, type: validationTypes.Date, before: `${options.before}` },
-      ));
-    }
-
-    if (options.after && value < options.after) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.after || this.afterFailMessage,
-        { field, type: validationTypes.Date, after: `${options.after}` },
-      ));
-    }
-
-    return response;
-  }
-
-  public email(
-    field: string,
-    value: any,
-    options?: IEmailValidationOptions,
-    failMessages?: IValidationFailMessages,
-  ): IValidationResponse {
-    const response: IValidationResponse = {
-      messages: [],
-      success: true,
-    };
-
-    const regEx: RegExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-
-    if (!regEx.test(value)) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.type || this.typeFailMessage,
-        { field, type: validationTypes.Email, value },
-      ));
-    }
-
-    if (!options) {
-      return response;
-    }
-
-    if (options.required !== undefined && options.required && !value) {
-      response.success = false;
-      response.messages.push(validationMessage(
-        failMessages && failMessages.required || this.requiredFailMessage,
-        { field, type: validationTypes.Email, value },
-      ));
-    }
-
-    if (options.extension) {
-      const emailArray = value.split("@");
-      if (emailArray[1] !== options.extension) {
-        response.success = false;
-        response.messages.push(validationMessage(
-          failMessages && failMessages.extension || this.doaminFailMessage,
-          { field, type: validationTypes.Email, value },
-        ));
-      }
-    }
-    return response;
+    this.string = new StringValidator(validationFailMessages).validate;
+    this.number = new NumberValidator(validationFailMessages).validate;
+    this.date = new DateValidator(validationFailMessages).validate;
+    this.email = new EmailValidator(validationFailMessages).validate;
   }
 
   private _initializaValidationMessages(failMessages?: IValidationFailMessages) {
     if (failMessages) {
-      this.includeFailMessage = failMessages.include || this.includeFailMessage;
-      this.maxLengthFailMessage = failMessages.maxLength || this.maxLengthFailMessage;
-      this.maxValueFailMessage = failMessages.maxValue || this.maxValueFailMessage;
-      this.minLengthFailMessage = failMessages.minLength || this.minLengthFailMessage;
-      this.minValueFailMessage = failMessages.minValue || this.minValueFailMessage;
-      this.noTrailingSpaceFailMessage = failMessages.noTrailingSpace || this.noTrailingSpaceFailMessage;
-      this.requiredFailMessage = failMessages.required || this.requiredFailMessage;
-      this.typeFailMessage = failMessages.type || this.typeFailMessage;
+      this.validationFailMessages.include =
+        failMessages.include || this.validationFailMessages.include;
+      this.validationFailMessages.maxLength =
+        failMessages.maxLength || this.validationFailMessages.maxLength;
+      this.validationFailMessages.maxValue =
+        failMessages.maxValue || this.validationFailMessages.maxValue;
+      this.validationFailMessages.minLength =
+        failMessages.minLength || this.validationFailMessages.minLength;
+      this.validationFailMessages.minValue =
+        failMessages.minValue || this.validationFailMessages.minValue;
+      this.validationFailMessages.noTrailingSpace =
+        failMessages.noTrailingSpace || this.validationFailMessages.noTrailingSpace;
+      this.validationFailMessages.required =
+        failMessages.required || this.validationFailMessages.required;
+      this.validationFailMessages.type =
+        failMessages.type || this.validationFailMessages.type;
+      this.validationFailMessages.extension =
+        failMessages.type || this.validationFailMessages.extension;
+      this.validationFailMessages.after =
+        failMessages.type || this.validationFailMessages.after;
+      this.validationFailMessages.before =
+        failMessages.type || this.validationFailMessages.before;
     }
   }
 }

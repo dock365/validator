@@ -1,6 +1,6 @@
 {
-  "name": "@dock365/validator",
-  "version": "0.2.4",
+  "name": "@braces/validator",
+  "version": "0.3.0",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dock365/validator.git"
+    "url": "git+https://github.com/codebraces/validator.git"
   },
   "keywords": [
     "validator",
@@ -24,10 +24,11 @@
   "author": "Hafeez Hamza",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dock365/validator/issues"
+    "url": "https://github.com/codebraces/validator/issues"
   },
-  "homepage": "https://github.com/dock365/validator#readme",
+  "homepage": "https://github.com/codebraces/validator#readme",
   "devDependencies": {
+    "@braces/tslint-config": "^0.1.0",
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.5",
     "chai": "^4.1.2",
