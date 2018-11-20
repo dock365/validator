@@ -9,6 +9,7 @@ import StringValidator from './validators/StringValidator';
 import NumberValidator from './validators/NumberValidator';
 import DateValidator from './validators/DateValidator';
 import EmailValidator from './validators/EmailValidator';
+import { validationTypes } from './const/validationTypes';
 
 export {
   IBaseValidationOptions,
@@ -29,10 +30,10 @@ export { IValidationFailMessages, validationFailMessages } from './const/validat
 
 // tslint:disable-next-line:export-name
 export default class Validator {
-  public string: stringValidateMethodType;
-  public number: numberValidateMethodType;
-  public date: dateValidateMethodType;
-  public email: emailValidateMethodType;
+  public [validationTypes.String]: stringValidateMethodType;
+  public [validationTypes.Number]: numberValidateMethodType;
+  public [validationTypes.Date]: dateValidateMethodType;
+  public [validationTypes.Email]: emailValidateMethodType;
 
   private validationFailMessages: IValidationFailMessages = {
     before: validationFailMessages.before || '',
@@ -55,10 +56,10 @@ export default class Validator {
       }
     }
 
-    this.string = new StringValidator(validationFailMessages).validate;
-    this.number = new NumberValidator(validationFailMessages).validate;
-    this.date = new DateValidator(validationFailMessages).validate;
-    this.email = new EmailValidator(validationFailMessages).validate;
+    this[validationTypes.String] = new StringValidator(validationFailMessages).validate;
+    this[validationTypes.Number] = new NumberValidator(validationFailMessages).validate;
+    this[validationTypes.Date] = new DateValidator(validationFailMessages).validate;
+    this[validationTypes.Email] = new EmailValidator(validationFailMessages).validate;
   }
 
   private _initializaValidationMessages(failMessages?: IValidationFailMessages) {

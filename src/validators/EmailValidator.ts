@@ -57,6 +57,7 @@ export default class EmailValidator extends BaseValidator implements IValidator 
         ));
       }
     }
+
     return response;
   }
 }
