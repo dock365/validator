@@ -1,10 +1,33 @@
-import validationFailMessages, { IValidationFailMessages } from './const/validationFailMessages';
-import { emailValidateMethodType, dateValidateMethodType, numberValidateMethodType, stringValidateMethodType } from './validators/IValidator';
+import { IValidationFailMessages, validationFailMessages } from './const/validationFailMessages';
+import {
+  emailValidateMethodType,
+  dateValidateMethodType,
+  numberValidateMethodType,
+  stringValidateMethodType,
+} from './validators/IValidator';
 import StringValidator from './validators/StringValidator';
 import NumberValidator from './validators/NumberValidator';
 import DateValidator from './validators/DateValidator';
 import EmailValidator from './validators/EmailValidator';
 
+export {
+  IBaseValidationOptions,
+  IDateValidationOptions,
+  IEmailValidationOptions,
+  INumberValidationOptions,
+  IStringValidationOptions,
+} from './validators/IValidationOptions';
+export {
+  IValidationResponse,
+  dateValidateMethodType,
+  emailValidateMethodType,
+  numberValidateMethodType,
+  stringValidateMethodType,
+} from './validators/IValidator';
+export { validationTypes } from './const/validationTypes';
+export { IValidationFailMessages, validationFailMessages } from './const/validationFailMessages';
+
+// tslint:disable-next-line:export-name
 export default class Validator {
   public string: stringValidateMethodType;
   public number: numberValidateMethodType;
