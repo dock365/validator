@@ -1,5 +1,5 @@
 import { IValidationFailMessages } from '../const/validationFailMessages';
-import validationTypes from '../const/validationTypes';
+import { validationTypes } from '../const/validationTypes';
 import validationMessage from '../libs/validationMessage';
 import BaseValidator from './BaseValidator';
 import IValidator, { IValidationResponse } from './IValidator';

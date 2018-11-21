@@ -1,11 +1,16 @@
-import validationTypes from "../const/validationTypes";
+import { validationTypes } from "../const/validationTypes";
 
-export default (
+const validationMessage = (
   message: string = "",
   values: { field?: string, value?: string, type?: validationTypes, [key: string]: string | undefined },
 ): string => {
-  Object.keys(values).forEach((key) => {
-    message = `${message}`.replace(`$${key}`, values[key] || "");
-  });
-  return message;
+  let processedMessage: string = message;
+  Object.keys(values)
+    .forEach((key) => {
+      processedMessage = `${processedMessage}`.replace(`$${key}`, values[key] || "");
+    });
+
+  return processedMessage;
 };
+
+export default validationMessage;

@@ -12,7 +12,7 @@ export interface IValidationFailMessages {
   extension?: string;
 }
 
-const validationFailMessages: IValidationFailMessages = {
+export const validationFailMessages: IValidationFailMessages = {
   after: "$field must be be less than $after",
   before: "$field must be greater than $before",
   extension: "$field extension must be $extension",
@@ -25,5 +25,3 @@ const validationFailMessages: IValidationFailMessages = {
   required: "$field is required!",
   type: "$field must be a $type!",
 };
-
-export default validationFailMessages;

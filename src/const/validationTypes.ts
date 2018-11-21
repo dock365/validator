@@ -1,8 +1,6 @@
-enum validationTypes {
-  String = "String",
-  Number = "Number",
-  Email = "Email",
-  Date = "Date",
+export enum validationTypes {
+  String = "string",
+  Number = "number",
+  Email = "email",
+  Date = "date",
 }
-
-export default validationTypes;
