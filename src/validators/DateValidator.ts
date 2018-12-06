@@ -25,7 +25,7 @@ export default class DateValidator extends BaseValidator implements IValidator {
       success: true,
     };
 
-    if ((value) instanceof Date !== true) {
+    if (value && (value) instanceof Date !== true) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.type || this.validationFailMessages.type,
