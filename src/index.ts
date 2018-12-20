@@ -46,6 +46,7 @@ export default class Validator {
     required: validationFailMessages.required || '',
     after: validationFailMessages.after || '',
     type: validationFailMessages.type || '',
+    regx: validationFailMessages.regx || '',
     extension: validationFailMessages.extension || '',
   };
 
@@ -78,6 +79,8 @@ export default class Validator {
         failMessages.noTrailingSpace || this.validationFailMessages.noTrailingSpace;
       this.validationFailMessages.required =
         failMessages.required || this.validationFailMessages.required;
+      this.validationFailMessages.regx =
+        failMessages.regx || this.validationFailMessages.regx;
       this.validationFailMessages.type =
         failMessages.type || this.validationFailMessages.type;
       this.validationFailMessages.extension =

@@ -44,6 +44,15 @@ export default class StringValidator extends BaseValidator implements IValidator
       ));
     }
 
+    if (options.regx && !options.regx.test(value)) {
+      response.success = false;
+      response.messages.push(validationMessage(
+        failMessages && failMessages.regx || this.validationFailMessages.regx,
+        { field, type: validationTypes.String, regx: `${options.regx}` },
+      ));
+
+    }
+
     if (options.maxLength && value.length > options.maxLength) {
       response.success = false;
       response.messages.push(validationMessage(

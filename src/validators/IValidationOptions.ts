@@ -7,7 +7,7 @@ export interface IStringValidationOptions extends IBaseValidationOptions {
   maxLength?: number;
   include?: string;
   noTrailingSpace?: boolean;
-  regx?: string;
+  regx?: RegExp;
 }
 
 export interface INumberValidationOptions extends IBaseValidationOptions {

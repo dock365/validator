@@ -43,6 +43,7 @@ const validator = new Validator({
     noTrailingSpace: "custom validation message to check $field has trailing spaces",
     required: "custom validation message to check $field is required",
     type: "custom validation message to check $field type",
+    regx: "custom validation message to check $regx type",
     /* All values are optional, if not defined default will be used */
   }
 });
@@ -121,6 +122,7 @@ validator.number(
 | Name             | Type   | Default                                             | Description                                                             |
 | :--------------- | :----- | :-------------------------------------------------- | :---------------------------------------------------------------------- |
 | required         | string | $field is required!                                 | validation fail message if field is required and it's not present       |
+| regx         | string | $field must match $regx!                                 | validation fail message if field does not match regx       |
 | type             | string | $field must be a $type!                             | validation fail message if type check fails                             |
 | minLength        | string | $field can't be less than $minLength charectors!    | validation fail message if field length is less than specified value    |
 | maxLength        | string | $field can't be greater than $maxLength charectors! | validation fail message if field length is greater than specified value |
@@ -140,6 +142,7 @@ validator.number(
 | :--------------- | :------ | :-------- | :-------------------------------------------------------------------------------- |
 | minLength        | number  | undefined | return success as false if the field value length is less than specified value    |
 | maxLength        | number  | undefined | return success as false if the field value length is greater than specified value |
+| regx          | regx  | undefined | return success as false if the field doesn't match specified regx     |
 | include          | string  | undefined | return success as false if the field doesn't contain specified include string     |
 | noTrailingSpaces | boolean | undefined | return success as false if the field contains trailing space                      |
 
