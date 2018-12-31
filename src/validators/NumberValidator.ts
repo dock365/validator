@@ -36,7 +36,7 @@ export default class NumberValidator extends BaseValidator implements IValidator
       return response;
     }
 
-    if (options.required !== undefined && options.required && !value) {
+    if (options.required !== undefined && options.required && !value && value !== 0) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.required || this.validationFailMessages.required,

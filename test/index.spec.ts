@@ -45,6 +45,16 @@ describe("Number Validator", () => {
         .that.is.empty;
     });
 
+    it("should return success: true without message when the value is present", () => {
+      const result = validator.number("Title", 0, { required: true });
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages)
+        .to.be.an("array")
+        .that.is.empty;
+    });
+
     it("should return success: false with message when the value is null", () => {
       const result = validator.number("Title", null, { required: true });
 
