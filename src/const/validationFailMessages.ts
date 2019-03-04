@@ -12,6 +12,7 @@ export interface IValidationFailMessages {
   extension?: string;
   regx?: string;
   preventDecimalPlaces?: string;
+  contentType?: string;
 }
 
 export const validationFailMessages: IValidationFailMessages = {
@@ -28,4 +29,5 @@ export const validationFailMessages: IValidationFailMessages = {
   regx: "$field must match $regx!",
   type: "$field must be a $type!",
   preventDecimalPlaces: "$field must not contain any decimal places!",
+  contentType: "$field has invalid content!",
 };

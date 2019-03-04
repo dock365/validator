@@ -1,4 +1,4 @@
-import { validationTypes } from "../const/validationTypes";
+import { validationTypes } from '../const/validationTypes';
 
 export interface IBaseValidationOptions {
   required?: boolean;
@@ -27,7 +27,7 @@ export interface IArrayValidationOptions extends IBaseValidationOptions {
   minLength?: number;
   maxLength?: number;
   include?: string | number;
-  contentType?: validationTypes;
+  contentType?: validationTypes.Number | validationTypes.String;
 }
 
 export interface IEmailValidationOptions extends IBaseValidationOptions {

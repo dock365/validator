@@ -196,4 +196,60 @@ describe('Array Validator', () => {
         );
     });
   });
+
+  describe('content type', () => {
+    it('should return success: true without message when all content in the array is string', () => {
+      const result = validator.array('Title', ["a", "b", "c"], {
+        contentType: validationTypes.String,
+      });
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an('array').that.is.empty;
+    });
+
+    it('should return success: true without message when all content in the array is number', () => {
+      const result = validator.array('Title', [1, 2, 3, 5], {
+        contentType: validationTypes.Number,
+      });
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an('array').that.is.empty;
+    });
+
+    it('should return success: false with message when all values in the array is not number', () => {
+      const result = validator.array('Title', [1, 2, 3, "5", 6, 6], {
+        contentType: validationTypes.Number,
+      });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an('array')
+        .that.include(
+          validationMessage(validationFailMessages.contentType, {
+            field: 'Title',
+            type: validationTypes.Array,
+            contentType: validationTypes.Number,
+          })
+        );
+    });
+
+    it('should return success: false with message when all values in the array is not string', () => {
+      const result = validator.array('Title', ["1", "2", 3, "5", 6, 6], {
+        contentType: validationTypes.String,
+      });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an('array')
+        .that.include(
+          validationMessage(validationFailMessages.contentType, {
+            field: 'Title',
+            type: validationTypes.Array,
+            contentType: validationTypes.String,
+          })
+        );
+    });
+  });
 });

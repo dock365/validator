@@ -58,6 +58,7 @@ export default class Validator {
     regx: validationFailMessages.regx || '',
     extension: validationFailMessages.extension || '',
     preventDecimalPlaces: validationFailMessages.preventDecimalPlaces || '',
+    contentType: validationFailMessages.contentType || '',
   };
 
   constructor(config?: { failMessages?: IValidationFailMessages }) {
@@ -116,6 +117,8 @@ export default class Validator {
       this.validationFailMessages.preventDecimalPlaces =
         failMessages.preventDecimalPlaces ||
         this.validationFailMessages.preventDecimalPlaces;
+      this.validationFailMessages.contentType =
+        failMessages.contentType || this.validationFailMessages.contentType;
     }
   }
 }
