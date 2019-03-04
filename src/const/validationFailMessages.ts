@@ -11,6 +11,7 @@ export interface IValidationFailMessages {
   after?: string;
   extension?: string;
   regx?: string;
+  preventDecimalPlaces?: string;
 }
 
 export const validationFailMessages: IValidationFailMessages = {
@@ -18,12 +19,13 @@ export const validationFailMessages: IValidationFailMessages = {
   before: "$field must be greater than $before",
   extension: "$field extension must be $extension",
   include: "$field must include '$include'!",
-  maxLength: "$field can't be greater than $maxLength charectors!",
+  maxLength: "$field can't be greater than $maxLength characters!",
   maxValue: "$field can't be greater than $maxValue!",
-  minLength: "$field can't be less than $minLength charectors!",
+  minLength: "$field can't be less than $minLength characters!",
   minValue: "$field can't be less than $minValue!",
   noTrailingSpace: "$field must not contain any trailing spaces!",
   required: "$field is required!",
   regx: "$field must match $regx!",
   type: "$field must be a $type!",
+  preventDecimalPlaces: "$field must not contain any decimal places!",
 };

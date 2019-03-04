@@ -3,9 +3,9 @@ import { validationTypes } from '../const/validationTypes';
 import validationMessage from '../libs/validationMessage';
 import BaseValidator from './BaseValidator';
 import IValidator, { IValidationResponse } from './IValidator';
-import { IStringValidationOptions, INumberValidationOptions } from './IValidationOptions';
+import { IArrayValidationOptions } from './IValidationOptions';
 
-export default class NumberValidator extends BaseValidator implements IValidator {
+export default class ArrayValidator extends BaseValidator implements IValidator {
 
   private validationFailMessages: IValidationFailMessages = {};
 
@@ -17,7 +17,7 @@ export default class NumberValidator extends BaseValidator implements IValidator
   public validate(
     field: string,
     value: any,
-    options?: INumberValidationOptions,
+    options?: IArrayValidationOptions,
     failMessages?: IValidationFailMessages,
   ): IValidationResponse {
     const response: IValidationResponse = {
@@ -25,46 +25,47 @@ export default class NumberValidator extends BaseValidator implements IValidator
       success: true,
     };
 
-    if (typeof (value) !== 'number' && value !== undefined && value !== null) {
+    if (value && !Array.isArray(value)) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.type || this.validationFailMessages.type,
-        { field, type: validationTypes.Number, value },
+        { field, type: validationTypes.Array, value },
       ));
     }
+
     if (!options) {
       return response;
     }
 
-    if (options.required !== undefined && options.required && !value && value !== 0) {
+    if (options.required !== undefined && options.required && !value) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.required || this.validationFailMessages.required,
-        { field, type: validationTypes.Number, value },
+        { field, type: validationTypes.Array, value },
       ));
     }
 
-    if (options.maxValue && value > options.maxValue) {
+    if (options.minLength && value.length < options.minLength) {
       response.success = false;
       response.messages.push(validationMessage(
-        failMessages && failMessages.maxValue || this.validationFailMessages.maxValue,
-        { field, type: validationTypes.Number, maxValue: `${options.maxValue}` },
+        failMessages && failMessages.minLength || this.validationFailMessages.minLength,
+        { field, type: validationTypes.Array, minLength: `${options.minLength}` },
       ));
     }
 
-    if (options.minValue && value < options.minValue) {
+    if (options.maxLength && value.length > options.maxLength) {
       response.success = false;
       response.messages.push(validationMessage(
-        failMessages && failMessages.minValue || this.validationFailMessages.minValue,
-        { field, type: validationTypes.Number, minValue: `${options.minValue}` },
+        failMessages && failMessages.maxLength || this.validationFailMessages.maxLength,
+        { field, type: validationTypes.Array, maxLength: `${options.maxLength}` },
       ));
     }
 
-    if (options.preventDecimalPlaces === true && value%1 > 0) {
+    if (options.include && value.indexOf(options.include) < 0 ) {
       response.success = false;
       response.messages.push(validationMessage(
-        failMessages && failMessages.preventDecimalPlaces || this.validationFailMessages.preventDecimalPlaces,
-        { field, type: validationTypes.Number },
+        failMessages && failMessages.include || this.validationFailMessages.include,
+        { field, type: validationTypes.Array, include: `${options.include}` },
       ));
     }
 

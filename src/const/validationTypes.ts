@@ -3,4 +3,5 @@ export enum validationTypes {
   Number = "number",
   Email = "email",
   Date = "date",
+  Array = "array",
 }

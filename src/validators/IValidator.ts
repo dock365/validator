@@ -34,6 +34,13 @@ export type emailValidateMethodType = (
   failMessages?: IValidationFailMessages,
 ) => IValidationResponse;
 
+export type arrayValidateMethodType = (
+  field: string,
+  value: any,
+  options?: IValidationOptions.IArrayValidationOptions,
+  failMessages?: IValidationFailMessages,
+) => IValidationResponse;
+
 export default interface IValidator {
   validate: stringValidateMethodType |
   numberValidateMethodType |

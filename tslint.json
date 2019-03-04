@@ -1,9 +1,12 @@
 {
   "defaultSeverity": "error",
   "extends": [
-    "@braces/tslint-config"
+    "@braces/tslint-config",
+    "tslint-config-prettier"
   ],
   "jsRules": {},
   "rulesDirectory": [],
-  "rules": {}
+  "rules": {
+    "newline-per-chained-call": false
+  }
 }
