@@ -22,6 +22,7 @@ export {
   IEmailValidationOptions,
   INumberValidationOptions,
   IStringValidationOptions,
+  IArrayValidationOptions,
 } from './validators/IValidationOptions';
 export {
   IValidationResponse,
@@ -29,6 +30,7 @@ export {
   emailValidateMethodType,
   numberValidateMethodType,
   stringValidateMethodType,
+  arrayValidateMethodType,
 } from './validators/IValidator';
 export { validationTypes } from './const/validationTypes';
 export {
