@@ -45,7 +45,7 @@ export default class DateValidator extends BaseValidator implements IValidator {
       ));
     }
 
-    if (options.before && value > options.before) {
+    if (value && options.before && value > options.before) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.before || this.validationFailMessages.before,
@@ -53,7 +53,7 @@ export default class DateValidator extends BaseValidator implements IValidator {
       ));
     }
 
-    if (options.after && value < options.after) {
+    if (value && options.after && value < options.after) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.after || this.validationFailMessages.after,
