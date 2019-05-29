@@ -27,7 +27,7 @@ export default class EmailValidator extends BaseValidator implements IValidator 
 
     const regEx: RegExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 
-    if (!regEx.test(value)) {
+    if (value && !regEx.test(value)) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.type || this.validationFailMessages.type,
