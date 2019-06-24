@@ -94,6 +94,7 @@ export default class ArrayValidator extends BaseValidator
 
     if (
       options.contentType &&
+      value &&
       !value.every(
         (item: string | number) => (typeof item) === options.contentType
       )
