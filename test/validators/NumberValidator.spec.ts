@@ -189,6 +189,29 @@ describe('Number Validator', () => {
           })
         );
     });
+
+    it('should return success: true without message when the value is greater than negative minimum value', () => {
+      const result = validator.number('Title', 45, { minValue: -60 });
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an('array').that.is.empty;
+    });
+
+    it('should return success: false with message when the value is less than 0', () => {
+      const result = validator.number('Title', -5, { minValue: 0 });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an('array')
+        .that.include(
+          validationMessage(validationFailMessages.minValue, {
+            field: 'Title',
+            type: validationTypes.Number,
+            minValue: '0',
+          })
+        );
+    });
   });
 
   describe('Max Value', () => {

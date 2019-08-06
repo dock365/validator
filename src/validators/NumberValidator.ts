@@ -44,7 +44,7 @@ export default class NumberValidator extends BaseValidator implements IValidator
       ));
     }
 
-    if (options.maxValue && value > options.maxValue) {
+    if ((options.maxValue || options.maxValue === 0) && value > options.maxValue) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.maxValue || this.validationFailMessages.maxValue,
@@ -52,7 +52,7 @@ export default class NumberValidator extends BaseValidator implements IValidator
       ));
     }
 
-    if (options.minValue && value < options.minValue) {
+    if ((options.minValue || options.minValue === 0) && value < options.minValue) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.minValue || this.validationFailMessages.minValue,
@@ -60,7 +60,7 @@ export default class NumberValidator extends BaseValidator implements IValidator
       ));
     }
 
-    if (options.preventDecimalPlaces === true && value%1 > 0) {
+    if (options.preventDecimalPlaces === true && value % 1 > 0) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.preventDecimalPlaces || this.validationFailMessages.preventDecimalPlaces,
