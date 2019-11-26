@@ -67,6 +67,13 @@ describe('Email Validator', () => {
           })
         );
     });
+
+    it('should return success: true without message when the email is empty', () => {
+      const result = validator.email('Title', '');
+
+      expect(result.success).to.equal(true);
+      expect(result.messages).to.be.an('array').that.is.empty;
+    });
   });
 
   describe('Extension', () => {
