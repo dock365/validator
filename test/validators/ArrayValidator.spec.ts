@@ -108,6 +108,23 @@ describe('Array Validator', () => {
         );
     });
 
+    it('should return success: false with message when the array undefined', () => {
+      const result = validator.array('Title', undefined, {
+        minLength: 5,
+      });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an('array')
+        .that.include(
+          validationMessage(validationFailMessages.minLength, {
+            field: 'Title',
+            type: validationTypes.Array,
+            minLength: '5',
+          })
+        );
+    });
+
     it('should return success: true without message when the array length is equal to min length', () => {
       const result = validator.array('Title', [1, 2, 3], {
         minLength: 3,
@@ -132,6 +149,23 @@ describe('Array Validator', () => {
 
     it('should return success: false with message when the array length is greater than max length', () => {
       const result = validator.array('Title', [1, 2, 3, 5, 6, 6], {
+        maxLength: 4,
+      });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an('array')
+        .that.include(
+          validationMessage(validationFailMessages.maxLength, {
+            field: 'Title',
+            type: validationTypes.Array,
+            maxLength: '4',
+          })
+        );
+    });
+
+    it('should return success: false with message when the array in undefined', () => {
+      const result = validator.array('Title', undefined, {
         maxLength: 4,
       });
 
@@ -195,6 +229,24 @@ describe('Array Validator', () => {
           })
         );
     });
+
+    it('should return success: false with message  when the array in undefined', () => {
+      const result = validator.array('Title', undefined, {
+        include: 4,
+      });
+
+      expect(result.success).to.equal(false);
+      expect(result.messages)
+        .to.be.an('array')
+        .that.include(
+          validationMessage(validationFailMessages.include, {
+            field: 'Title',
+            type: validationTypes.Array,
+            include: '4',
+          })
+        );
+    });
+
   });
 
   describe('content type', () => {

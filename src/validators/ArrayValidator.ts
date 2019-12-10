@@ -30,7 +30,7 @@ export default class ArrayValidator extends BaseValidator
       response.messages.push(
         validationMessage(
           (failMessages && failMessages.type) ||
-            this.validationFailMessages.type,
+          this.validationFailMessages.type,
           { field, type: validationTypes.Array, value }
         )
       );
@@ -45,18 +45,18 @@ export default class ArrayValidator extends BaseValidator
       response.messages.push(
         validationMessage(
           (failMessages && failMessages.required) ||
-            this.validationFailMessages.required,
+          this.validationFailMessages.required,
           { field, type: validationTypes.Array, value }
         )
       );
     }
 
-    if (options.minLength && value.length < options.minLength) {
+    if (options.minLength && (!value || value.length < options.minLength)) {
       response.success = false;
       response.messages.push(
         validationMessage(
           (failMessages && failMessages.minLength) ||
-            this.validationFailMessages.minLength,
+          this.validationFailMessages.minLength,
           {
             field,
             type: validationTypes.Array,
@@ -66,12 +66,12 @@ export default class ArrayValidator extends BaseValidator
       );
     }
 
-    if (options.maxLength && value.length > options.maxLength) {
+    if (options.maxLength && (!value || value.length > options.maxLength)) {
       response.success = false;
       response.messages.push(
         validationMessage(
           (failMessages && failMessages.maxLength) ||
-            this.validationFailMessages.maxLength,
+          this.validationFailMessages.maxLength,
           {
             field,
             type: validationTypes.Array,
@@ -81,12 +81,12 @@ export default class ArrayValidator extends BaseValidator
       );
     }
 
-    if (options.include && value.indexOf(options.include) < 0) {
+    if (options.include && (!value || value.indexOf(options.include) < 0)) {
       response.success = false;
       response.messages.push(
         validationMessage(
           (failMessages && failMessages.include) ||
-            this.validationFailMessages.include,
+          this.validationFailMessages.include,
           { field, type: validationTypes.Array, include: `${options.include}` }
         )
       );
@@ -103,7 +103,7 @@ export default class ArrayValidator extends BaseValidator
       response.messages.push(
         validationMessage(
           (failMessages && failMessages.contentType) ||
-            this.validationFailMessages.contentType,
+          this.validationFailMessages.contentType,
           {
             field,
             type: validationTypes.Array,
