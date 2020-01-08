@@ -131,6 +131,28 @@ describe('String Validator', () => {
       expect(result.messages).to.be.an('array').that.is.empty;
     });
 
+    it('should return success: true without message when the value is empty and min length is set and field is not required', () => {
+      const result = validator.string('Title', '', { minLength: 3, required: false });
+
+      expect(result.success).to.equal(true);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an('array').that.is.empty;
+    });
+
+    it('should return success: false with message when the value is empty and min length is set and field is required', () => {
+      const result = validator.string('Title', '', { minLength: 3, required: true });
+
+      expect(result.success).to.equal(false);
+      // tslint:disable-next-line:no-unused-expression
+      expect(result.messages).to.be.an('array')
+        .that.include(
+          validationMessage(validationFailMessages.required, {
+            field: 'Title',
+            type: validationTypes.String,
+          })
+        );
+    });
+
     it('should return success: false with message when the value is less than min length', () => {
       const result = validator.string('Title', 'ab', { minLength: 3 });
 

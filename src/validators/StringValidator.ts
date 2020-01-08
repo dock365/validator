@@ -61,7 +61,7 @@ export default class StringValidator extends BaseValidator implements IValidator
       ));
     }
 
-    if (options.minLength && value.length < options.minLength) {
+    if (value && options.minLength && value.length < options.minLength) {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.minLength || this.validationFailMessages.minLength,
