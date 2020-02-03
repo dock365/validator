@@ -25,7 +25,7 @@ export default class NumberValidator extends BaseValidator implements IValidator
       success: true,
     };
 
-    if (typeof (value) !== 'number' && value !== undefined && value !== null) {
+    if (typeof (value) !== 'number' && value !== undefined && value !== null && value !== "") {
       response.success = false;
       response.messages.push(validationMessage(
         failMessages && failMessages.type || this.validationFailMessages.type,
