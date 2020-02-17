@@ -41,6 +41,13 @@ export type arrayValidateMethodType = (
   failMessages?: IValidationFailMessages,
 ) => IValidationResponse;
 
+export type regExValidateMethodType = (
+  field: string,
+  value: any,
+  options?: IValidationOptions.IRegExValidationOptions,
+  failMessages?: IValidationFailMessages,
+) => IValidationResponse;
+
 export default interface IValidator {
   validate: stringValidateMethodType |
   numberValidateMethodType |

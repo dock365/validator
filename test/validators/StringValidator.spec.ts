@@ -104,7 +104,7 @@ describe('String Validator', () => {
       expect(result.messages)
         .to.be.an('array')
         .that.include(
-          validationMessage(validationFailMessages.regx, {
+          validationMessage(validationFailMessages.regEx, {
             field: 'Title',
             type: validationTypes.String,
             regx: '/Hello/g',

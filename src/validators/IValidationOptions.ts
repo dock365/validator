@@ -33,3 +33,7 @@ export interface IArrayValidationOptions extends IBaseValidationOptions {
 export interface IEmailValidationOptions extends IBaseValidationOptions {
   extension?: string;
 }
+
+export interface IRegExValidationOptions extends IBaseValidationOptions {
+  regEx?: RegExp;
+}

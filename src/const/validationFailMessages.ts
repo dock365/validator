@@ -10,7 +10,7 @@ export interface IValidationFailMessages {
   before?: string;
   after?: string;
   extension?: string;
-  regx?: string;
+  regEx?: string;
   preventDecimalPlaces?: string;
   contentType?: string;
 }
@@ -26,7 +26,7 @@ export const validationFailMessages: IValidationFailMessages = {
   minValue: "$field can't be less than $minValue!",
   noTrailingSpace: "$field must not contain any trailing spaces!",
   required: "$field is required!",
-  regx: "$field must match $regx!",
+  regEx: "$field must match $regEx!",
   type: "$field must be a $type!",
   preventDecimalPlaces: "$field must not contain any decimal places!",
   contentType: "$field has invalid content!",

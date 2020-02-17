@@ -7,7 +7,7 @@ import {
   dateValidateMethodType,
   numberValidateMethodType,
   stringValidateMethodType,
-  arrayValidateMethodType,
+  arrayValidateMethodType, regExValidateMethodType,
 } from './validators/IValidator';
 import StringValidator from './validators/StringValidator';
 import NumberValidator from './validators/NumberValidator';
@@ -15,6 +15,7 @@ import DateValidator from './validators/DateValidator';
 import EmailValidator from './validators/EmailValidator';
 import { validationTypes } from './const/validationTypes';
 import ArrayValidator from './validators/ArrayValidator';
+import RegExValidator from './validators/RegExValidator';
 
 export {
   IBaseValidationOptions,
@@ -45,6 +46,7 @@ export default class Validator {
   public [validationTypes.Date]: dateValidateMethodType;
   public [validationTypes.Email]: emailValidateMethodType;
   public [validationTypes.Array]: arrayValidateMethodType;
+  public [validationTypes.RegEx]: regExValidateMethodType;
 
   private validationFailMessages: IValidationFailMessages = {
     before: validationFailMessages.before || '',
@@ -57,7 +59,7 @@ export default class Validator {
     required: validationFailMessages.required || '',
     after: validationFailMessages.after || '',
     type: validationFailMessages.type || '',
-    regx: validationFailMessages.regx || '',
+    regEx: validationFailMessages.regEx || '',
     extension: validationFailMessages.extension || '',
     preventDecimalPlaces: validationFailMessages.preventDecimalPlaces || '',
     contentType: validationFailMessages.contentType || '',
@@ -85,6 +87,9 @@ export default class Validator {
     this[validationTypes.Array] = new ArrayValidator(
       validationFailMessages
     ).validate;
+    this[validationTypes.RegEx] = new RegExValidator(
+      validationFailMessages
+    ).validate;
   }
 
   private _initializeValidationMessages(
@@ -106,8 +111,8 @@ export default class Validator {
         this.validationFailMessages.noTrailingSpace;
       this.validationFailMessages.required =
         failMessages.required || this.validationFailMessages.required;
-      this.validationFailMessages.regx =
-        failMessages.regx || this.validationFailMessages.regx;
+      this.validationFailMessages.regEx =
+        failMessages.regEx || this.validationFailMessages.regEx;
       this.validationFailMessages.type =
         failMessages.type || this.validationFailMessages.type;
       this.validationFailMessages.extension =
