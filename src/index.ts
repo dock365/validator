@@ -18,24 +18,8 @@ import { validationTypes } from './const/validationTypes';
 import ArrayValidator from './validators/ArrayValidator';
 import RegExValidator from './validators/RegExValidator';
 
-export {
-  IBaseValidationOptions,
-  IDateValidationOptions,
-  IEmailValidationOptions,
-  INumberValidationOptions,
-  IStringValidationOptions,
-  IArrayValidationOptions,
-  IRegExValidationOptions,
-} from './validators/IValidationOptions';
-export {
-  IValidationResponse,
-  dateValidateMethodType,
-  emailValidateMethodType,
-  numberValidateMethodType,
-  stringValidateMethodType,
-  arrayValidateMethodType,
-  regExValidateMethodType
-} from './validators/IValidator';
+export * from './validators/IValidationOptions';
+export * from './validators/IValidator';
 export { validationTypes } from './const/validationTypes';
 export {
   IValidationFailMessages,
