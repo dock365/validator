@@ -7,7 +7,8 @@ import {
   dateValidateMethodType,
   numberValidateMethodType,
   stringValidateMethodType,
-  arrayValidateMethodType, regExValidateMethodType,
+  arrayValidateMethodType,
+  regExValidateMethodType,
 } from './validators/IValidator';
 import StringValidator from './validators/StringValidator';
 import NumberValidator from './validators/NumberValidator';
@@ -24,6 +25,7 @@ export {
   INumberValidationOptions,
   IStringValidationOptions,
   IArrayValidationOptions,
+  IRegExValidationOptions,
 } from './validators/IValidationOptions';
 export {
   IValidationResponse,
@@ -32,6 +34,7 @@ export {
   numberValidateMethodType,
   stringValidateMethodType,
   arrayValidateMethodType,
+  regExValidateMethodType
 } from './validators/IValidator';
 export { validationTypes } from './const/validationTypes';
 export {
